@@ -1,19 +1,19 @@
 # GFSIP/1.0 Release Package
 
-## 内容
-- `GFSIP_v1.0_protocol_spec.md`：主规范
-- `gfsip-state-machine.json`：机器可读状态机
-- `gfsip-message-schema.json`：逻辑消息 Schema
-- `gfsip-error-registry.json`：数值错误码
-- `gfsip-conformance-checklist.csv`：一致性测试
-- `gfsip-traceability-matrix.csv`：需求—规范—测试—实现—责任映射
-- `CHANGELOG_v1.0.md`：版本变更
-- `SHA256SUMS.txt`：文件摘要
+## Contents
+- `GFSIP_v1.0_protocol_spec.md`: Primary specification
+- `gfsip-state-machine.json`: Machine-readable state machine
+- `gfsip-message-schema.json`: Logical message schema
+- `gfsip-error-registry.json`: Numeric error codes
+- `gfsip-conformance-checklist.csv`: Conformance tests
+- `gfsip-traceability-matrix.csv`: Requirements–specification–test–implementation–responsibility mapping
+- `CHANGELOG_v1.0.md`: Version changelog
+- `SHA256SUMS.txt`: File checksums
 
-## 状态
-这是实现就绪候选规范。版本号 1.0 表示接口冻结，不表示已经获得标准组织批准或完成外部互操作验证。
+## Status
+This is an implementation-ready candidate specification. Version 1.0 indicates a frozen interface; it does not imply approval by any standards body or completion of external interoperability validation.
 
-## 下一执行节点
+## Next Execution Milestones
 1. Frame Codec
 2. Session State Machine
 3. QUIC Adapter
@@ -21,6 +21,6 @@
 5. Channel Manager
 6. Dedupe Store
 7. Resume Service
-8. 两个独立实现
-9. 一致性测试
-10. 安全审计和生产试点
+8. Two independent implementations
+9. Conformance testing
+10. Security audit and production pilot

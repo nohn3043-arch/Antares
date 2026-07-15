@@ -235,7 +235,13 @@ GFSIP does **not** aim to:
 ## License
 
 This specification and associated artifacts are licensed under the
-**Apache License 2.0**. See [`LICENSE`](./LICENSE) for full terms.
+**Creative Commons Attribution 4.0 International** (CC BY 4.0).
+
+You are free to share, adapt, implement, and distribute this work for
+any purpose — including commercially — provided you give appropriate
+credit to the GFSIP Contributors.
+
+See [`LICENSE`](./LICENSE) for full legal terms.
 
 ---
 

@@ -1,119 +1,90 @@
-# The virtual world requires a universal and stable network.
+<p align="center">
+  <em>The virtual world requires a universal and stable network.</em>
+</p>
 
-# Antares GFSIP v1.0
-
-## Secure Federated Interoperability Protocol for Cross-Organizational AI Agents
-
-> Encrypted, multi-channel, recoverable cross-domain communication
-> for services, AI agents, devices, and organizations — no central authority required.
-
----
-
-**Version** `1.0` · **Status** `Implementation-Ready Candidate` · **Published** `2026-07-16`  
-**Base Transport** `QUIC (ALPN: gfsip/1)` · **Optional** `TCP + TLS 1.3`
+<p align="center">
+  <img src="https://img.shields.io/badge/version-1.0-D4AF37?style=flat-square" alt="version">
+  <img src="https://img.shields.io/badge/status-implementation_ready-2C2C2C?style=flat-square" alt="status">
+  <img src="https://img.shields.io/badge/transport-QUIC%20|%20TLS%201.3-2C2C2C?style=flat-square" alt="transport">
+  <img src="https://img.shields.io/badge/license-CC%20BY%204.0-2C2C2C?style=flat-square" alt="license">
+  <img src="https://img.shields.io/badge/frame-44%20bytes-2C2C2C?style=flat-square" alt="frame">
+</p>
 
 ---
 
-## Overview
+&nbsp;
 
-GFSIP is an application-layer protocol that enables independent organizations,
-network domains, devices, services, and AI agents to establish secure,
-recoverable communication sessions while retaining full autonomy over their
-identity, policies, and infrastructure.
+## ✦ Antares — GFSIP v1.0
 
-It sits above QUIC (or TCP+TLS 1.3), providing session management,
-multi-channel multiplexing, limited-window idempotency, optional signed
-causal audit trails, and cross-domain federation — all without requiring
-a global root of trust, central directory, or shared identity system.
+**Global Federated Stable Interoperability Protocol**
 
----
+Encrypted, multi-channel, recoverable cross-domain communication for services, AI agents, devices, and organizations — **no central authority required.**
 
-## Key Capabilities
+&nbsp;
 
-| # | Capability | Description |
-|---|---|---|
-| 1 | **Encrypted Sessions** | Mutual-TLS or token-based authenticated sessions over QUIC |
-| 2 | **Multi-Channel** | Independent logical channels within a single session |
-| 3 | **Session Recovery** | Resume sessions across network switches without re-authentication |
-| 4 | **Idempotent Side Effects** | Limited-window deduplication via idempotency keys |
-| 5 | **Structured Errors** | Numeric, machine-readable error codes with scope and retry hints |
-| 6 | **Causal Audit (opt-in)** | Signed event records with declared causal predecessors |
-| 7 | **Cross-Domain Federation** | Multi-trust-anchor routing with signed domain descriptors |
-| 8 | **Fault Isolation** | Single-domain failure does not block intra-domain traffic |
+## ✦ Protocol Stack
 
----
+```mermaid
+graph TD
+    subgraph "Application"
+        APP(("AI Agents<br/>Services<br/>Devices<br/>Organizations")):::app
+    end
 
-## Why GFSIP?
+    subgraph "GFSIP Layer"
+        SESS(("Session<br/>Management")):::gfsip
+        CHAN(("Multi-Channel<br/>Multiplexing")):::gfsip
+        IDEM(("Idempotency<br/>Deduplication")):::gfsip
+        RECV(("Session<br/>Recovery")):::gfsip
+        AUDIT(("Causal Audit<br/>(optional)")):::gfsip_opt
+        FED(("Cross-Domain<br/>Federation (optional)")):::gfsip_opt
+    end
 
-| Concern | GFSIP Approach |
-|---|---|
-| Central authority risk | Federation model — each domain governs itself |
-| Network disruption | Session recovery with state synchronization |
-| Duplicate operations | Application-level idempotency within a configurable window |
-| Audit & accountability | Optional signed causal event graph (Audit/1 profile) |
-| Vendor lock-in | Open specification; no proprietary components |
-| Transport lock-in | QUIC required; TCP+TLS 1.3 as optional fallback |
+    subgraph "Transport"
+        QUIC(("QUIC<br/>ALPN: gfsip/1")):::transport
+        TCP(("TCP + TLS 1.3<br/>(fallback)")):::transport_fallback
+    end
 
----
+    APP --> SESS
+    SESS --> CHAN
+    CHAN --> IDEM
+    IDEM --> RECV
+    AUDIT -.-> SESS
+    FED -.-> CHAN
+    SESS --> QUIC
+    SESS -.-> TCP
 
-## Repository Contents
+    classDef app fill:#FAFAFA,stroke:#D4AF37,stroke-width:1px,color:#2C2C2C
+    classDef gfsip fill:#F5F0E6,stroke:#C9A96E,stroke-width:1px,color:#2C2C2C
+    classDef gfsip_opt fill:#FAFAFA,stroke:#B8B8B8,stroke-width:1px,stroke-dasharray:4,color:#2C2C2C
+    classDef transport fill:#FAFAFA,stroke:#D4AF37,stroke-width:2px,color:#2C2C2C
+    classDef transport_fallback fill:#FAFAFA,stroke:#E0E0E0,stroke-width:1px,stroke-dasharray:4,color:#8B8B8B
+```
 
-| File | Purpose |
-|---|---|
-| `GFSIP_v1.0_protocol_spec.md` | Full protocol specification (33 sections) |
-| `gfsip-state-machine.json` | Machine-readable state machine definition |
-| `gfsip-message-schema.json` | Logical message JSON Schema |
-| `gfsip-error-registry.json` | Numeric error code registry |
-| `gfsip-conformance-checklist.csv` | Conformance test checklist |
-| `gfsip-traceability-matrix.csv` | Requirement → spec → test → implementation → responsibility mapping |
-| `CHANGELOG_v1.0.md` | v0.1 → v1.0 changelog |
-| `SHA256SUMS.txt` | File integrity checksums |
-| `reference-impl/` | **Python reference implementation** — Frame codec, session state machine, channel manager, authentication, dedupe store, resume service, audit log, federation registry, end-to-end demo, and Section 28 conformance vectors (9/9 pass) |
+&nbsp;
 
----
+## ✦ Session Lifecycle
 
-## Protocol Profiles
+```mermaid
+stateDiagram-v2
+    [*] --> NEW
+    NEW --> NEGOTIATING : version negotiation
+    NEGOTIATING --> AUTHENTICATING : mTLS / token
+    AUTHENTICATING --> ESTABLISHED : handshake complete
+    ESTABLISHED --> CLOSING : GOAWAY
+    CLOSING --> CLOSED
 
-### Core/1 — Mandatory
+    ESTABLISHED --> RECOVERING : network disruption
+    RECOVERING --> ESTABLISHED : resume token valid
+    RECOVERING --> NEW : resume failed
 
-Every conformant implementation **MUST** support:
+    CLOSED --> [*]
 
-- QUIC transport with ALPN `gfsip/1`
-- Version negotiation
-- Mutual authentication interface
-- Session & channel management
-- `DATA` with application-level acknowledgment (`APP_ACK`)
-- Message ID and idempotency key
-- Session recovery (resume tokens)
-- `PING` / `PONG` liveness
-- Graceful shutdown (`GOAWAY`)
-- Structured `ERROR` frames
-- Resource limit negotiation
-- Safe ignoring of unknown optional extensions
+    note right of ESTABLISHED : DATA · APP_ACK · PING/PONG<br/>Multi-channel active
+```
 
-### Audit/1 — Optional
+&nbsp;
 
-Adds signed causal event recording:
-
-- `EVENT` frames with declared direct causal predecessors
-- Actor identity, rule version, and state before/after hashes
-- Deterministic event signing
-- Self-loop and known-cycle rejection
-
-### Federation/1 — Optional
-
-Adds cross-domain routing:
-
-- Signed `DomainDescriptor` objects
-- Multi-trust-anchor configuration
-- Cross-domain route queries (`ROUTE_QUERY` / `ROUTE_RESULT`)
-- Descriptor expiry, revocation, and fault isolation
-
----
-
-## On the Wire
-
-GFSIP uses a **44-byte fixed header**:
+## ✦ 44-byte Fixed Header
 
 ```
  0                   1                   2                   3
@@ -127,167 +98,84 @@ GFSIP uses a **44-byte fixed header**:
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |                         Payload Length                        |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                                                               |
-|                         Session ID (128)                      |
-|                                                               |
+|                    Session ID (128 bits)                      |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                          Sequence (64)                        |
-|                                                               |
+|                     Sequence (64 bits)                        |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                          Channel ID                           |
+|                      Channel ID (32 bits)                     |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                 Extension Header (deterministic CBOR)         |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                         Payload (variable)                    |
+|              Extension Header (deterministic CBOR)            |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ```
 
-- Extension headers use **deterministic CBOR**
-- Integers: big-endian, shortest encoding
-- 18 standard message types (`0x01`–`0x16`), `0x80`–`0xFF` reserved for private experiments
+&nbsp;
 
----
+## ✦ Key Capabilities
 
-## Getting Started
+| # | Capability | Approach |
+|---|-----------|----------|
+| 1 | **Encrypted Sessions** | mTLS / token-based over QUIC |
+| 2 | **Multi-Channel** | Independent logical channels per session |
+| 3 | **Session Recovery** | Resume across network switches |
+| 4 | **Idempotent Side Effects** | Limited-window key deduplication |
+| 5 | **Structured Errors** | Numeric codes with scope + retry hints |
+| 6 | **Causal Audit** | Signed event records with causal predecessors |
+| 7 | **Cross-Domain Federation** | Multi-trust-anchor routing |
+| 8 | **Fault Isolation** | Single-domain failure → no blocking |
 
-A **Python reference implementation** is available in [`reference-impl/`](./reference-impl/).
+&nbsp;
+
+## ✦ Protocol Profiles
+
+| Profile | Status | Content |
+|---------|--------|---------|
+| `Core/1` | **Mandatory** | QUIC, version negotiation, auth, session/channel, DATA+ACK, PING/PONG, GOAWAY, errors, recovery, idempotency |
+| `Audit/1` | Optional | Signed causal event graph, identity binding, cycle rejection |
+| `Federation/1` | Optional | Domain descriptors, multi-trust-anchor, route queries, expiry/revocation |
+
+&nbsp;
+
+## ✦ Quick Start
 
 ```bash
 cd reference-impl
 pip install -r requirements.txt
 
-# End-to-end demo (handshake → channel → data → dedupe → recovery)
+# 5-scenario end-to-end demo
 python demo.py
 
-# Section 28 minimum conformance vectors (9 tests)
+# Conformance vectors (9/9 pass)
 python conformance.py
 ```
 
-The reference implementation covers:
+&nbsp;
 
-| Module | Section | Purpose |
-|---|---|---|
-| `types.py` | — | Frozen wire constants, message types, flags, states, errors |
-| `cbor_utils.py` | §7 | Deterministic CBOR encode/decode |
-| `frame.py` | §8 | 44-byte frame codec + serialization |
-| `state_machine.py` | §10 | Session states (8) + mandatory invariants (9) |
-| `channel.py` | §14 | Channel lifecycle, odd/even parity, flow control |
-| `auth.py` | §12 | HMAC proof over symmetric negotiation transcript |
-| `dedupe.py` | §15 | Limited-window idempotency store |
-| `resume.py` | §16 | Resume token issue/verify — single-use, identity-bound |
-| `audit.py` | §17 | Causal event log — self-loop / cycle rejection, signature |
-| `federation.py` | §18 | Domain descriptor validation, route loop/hop-limit detection |
-| `transport.py` | §6 | In-memory synchronous transport (swap for QUIC in production) |
-| `endpoint.py` | — | Integrated node: handshake driver, data path, recovery |
-| `conformance.py` | §28 | 9 minimum test vectors — all passing |
-| `demo.py` | — | 5-scenario end-to-end demonstration |
+## ✦ Use Cases
 
-### Implementation Order
+> Enterprise Integration · AI Agent Networks · IoT / Edge · Finance Compliance · Healthcare · Robotics
 
-```
- 1. Frame Codec            — 44-byte header parser/serializer
- 2. Session State Machine  — NEW → NEGOTIATING → AUTHENTICATING → ESTABLISHED → ...
- 3. QUIC Adapter           — ALPN gfsip/1 stream mapping
- 4. Authentication         — mTLS or signed-token handler
- 5. Channel Manager        — Channel lifecycle (IDLE → OPEN → CLOSED)
- 6. DATA / APP_ACK         — Application messaging with deduplication store
- 7. Resume Service         — Token-based session recovery
- 8. Core Conformance       — Pass all mandatory tests
- 9. Second Implementation  — Independent codebase for interop validation
-10. Audit/1 (optional)     — Signed causal event recording
-11. Federation/1 (opt.)    — Cross-domain descriptors and routing
-```
+&nbsp;
 
-### Conformance
-
-To claim **GFSIP/1.0 Core Conformant**, an implementation **MUST**:
-
-1. Implement the 44-byte fixed header
-2. Support deterministic CBOR encoding
-3. Use QUIC with ALPN `gfsip/1`
-4. Pass all Core mandatory conformance tests
-5. Publish implementation version, configuration summary, and test report
-6. Have zero known unpatched critical security vulnerabilities
-
-Audit/1 and Federation/1 conformance must be declared independently.
-See [`gfsip-conformance-checklist.csv`](./gfsip-conformance-checklist.csv).
-
----
-
-## Use Cases
-
-| Domain | Example |
-|---|---|
-| **Enterprise Integration** | Cross-organization workflow orchestration |
-| **AI Agent Networks** | Multi-agent task coordination with audit trail |
-| **IoT / Edge** | Device-to-cloud session recovery across network changes |
-| **Finance / Compliance** | Signed causal audit trails for regulatory reporting |
-| **Healthcare** | Federated data exchange with domain-level policy enforcement |
-| **Robotics** | Reliable command channels with idempotent safety operations |
-
----
-
-## Project Status
+## ✦ Project Status
 
 | Milestone | Status |
-|---|---|
-| Specification v1.0 (interface frozen) | ✅ Complete |
-| Machine-readable state machine & schema | ✅ Complete |
-| Conformance checklist & traceability matrix | ✅ Complete |
+|-----------|--------|
+| Specification v1.0 | ✅ Complete |
+| State machine & schema | ✅ Complete |
+| Conformance checklist | ✅ Complete |
 | Two independent implementations | 🔲 In progress |
-| Public interoperability report | 🔲 Pending |
+| Public interop report | 🔲 Pending |
 | Independent security audit | 🔲 Pending |
-| Three production pilot domains | 🔲 Pending |
-| Formal standards body process | 🔲 Future |
+
+&nbsp;
 
 ---
 
-## Non-Goals
-
-GFSIP does **not** aim to:
-
-- Replace IP, BGP, DNS, QUIC, or TLS
-- Provide a global root of authority
-- Guarantee zero-failure communication
-- Enable communication without a physical path
-- Provide unbounded Exactly-Once semantics
-- Automatically determine legal liability
-- Infer causality from temporal ordering
-
----
-
-## Known Limitations
-
-1. Sessions cannot be recovered if both peers lose persistent state.
-2. Deduplication is bounded by window size and storage reliability.
-3. Signed events attest to byte representation, not real-world truth.
-4. Multi-trust-anchor configurations require domain-level trust policy.
-5. Gateways may refuse interconnection.
-6. No communication without an alternative physical path.
-
----
-
-## License
-
-This specification and associated artifacts are licensed under the
-**Creative Commons Attribution 4.0 International** (CC BY 4.0).
-
-You are free to share, adapt, implement, and distribute this work for
-any purpose — including commercially — provided you give appropriate
-credit to the GFSIP Contributors.
-
-See [`LICENSE`](./LICENSE) for full legal terms.
-
----
-
-## Contributing
-
-This is a v1.0 frozen specification. Contributions should target:
-
-- Implementation experience reports
-- Interoperability test results
-- Security audit findings
-- Profile extensions (via the extension registry mechanism)
-
-For the full specification, start with
-[`GFSIP_v1.0_protocol_spec.md`](./GFSIP_v1.0_protocol_spec.md).
+<p align="center">
+  <a href="./GFSIP_v1.0_protocol_spec.md">Protocol Spec</a>
+  &nbsp;·&nbsp;
+  <a href="mailto:ai@nohnlins.com">ai@nohnlins.com</a>
+</p>
+<p align="center">
+  <sub>CC BY 4.0 · GFSIP Contributors</sub>
+</p>

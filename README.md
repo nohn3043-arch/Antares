@@ -1,6 +1,6 @@
 # Antares GFSIP v1.0
 
-## Global Federated Stable Interoperability Protocol
+## Secure Federated Interoperability Protocol for Cross-Organizational AI Agents
 
 > Encrypted, multi-channel, recoverable cross-domain communication
 > for services, AI agents, devices, and organizations — no central authority required.

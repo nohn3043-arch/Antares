@@ -147,6 +147,15 @@ GFSIP uses a **44-byte fixed header**:
 
 ## Getting Started
 
+A Python reference implementation is available in [`reference-impl/`](./reference-impl/).
+Install dependencies and run the demo:
+
+```bash
+cd reference-impl
+pip install -r requirements.txt
+python demo.py
+```
+
 ### Implementation Order
 
 ```

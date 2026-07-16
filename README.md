@@ -1,4 +1,4 @@
-# GFSIP v1.0
+# Antares GFSIP v1.0
 
 ## Global Federated Stable Interoperability Protocol
 

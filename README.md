@@ -1,293 +1,140 @@
-# The virtual world requires a universal and stable network.
+<p align="center">
+  <img src="assets/banner.svg" alt="ANTARES banner" style="width:100%">
+</p>
 
-# Antares GFSIP v1.0
+<p align="center">
+  <img src="https://img.shields.io/badge/protocol-D4AF37?style=flat-square" alt="protocol">  <img src="https://img.shields.io/badge/quic-D4AF37?style=flat-square" alt="quic">  <img src="https://img.shields.io/badge/federation-D4AF37?style=flat-square" alt="federation">
+</p>
 
-## Secure Federated Interoperability Protocol for Cross-Organizational AI Agents
+<blockquote align="center">
+  <em>Global Federated Stable Interoperability Protocol v1.0</em>
+</blockquote>
 
-> Encrypted, multi-channel, recoverable cross-domain communication
-> for services, AI agents, devices, and organizations — no central authority required.
+<div style="max-width:880px;margin:0 auto;padding:0 16px">
 
----
+## ✦ About
 
-**Version** `1.0` · **Status** `Implementation-Ready Candidate` · **Published** `2026-07-16`  
-**Base Transport** `QUIC (ALPN: gfsip/1)` · **Optional** `TCP + TLS 1.3`
+<p style="font-size:15px;line-height:1.8;color:#2C2C2C">ANTARES is GFSIP v1.0 — the Global Federated Stable Interoperability Protocol. It provides encrypted, multi-channel, recoverable cross-domain communication for services, AI agents, devices, and organizations with no central authority required. Built on QUIC as the mandatory transport layer and deterministic CBOR serialization, it includes built-in session recovery, idempotent deduplication, and causal auditing as the stable foundation for decentralized networks.</p>
 
----
+<p align="center">
+  <img src="assets/overview.svg" alt="ANTARES overview" style="width:100%">
+</p>
 
-## Overview
+</div>
 
-GFSIP is an application-layer protocol that enables independent organizations,
-network domains, devices, services, and AI agents to establish secure,
-recoverable communication sessions while retaining full autonomy over their
-identity, policies, and infrastructure.
+<p align="center">— ✦ —</p>
 
-It sits above QUIC (or TCP+TLS 1.3), providing session management,
-multi-channel multiplexing, limited-window idempotency, optional signed
-causal audit trails, and cross-domain federation — all without requiring
-a global root of trust, central directory, or shared identity system.
+## ✦ Key Capabilities
 
----
+<div style="max-width:880px;margin:0 auto;padding:0 16px">
 
-## Key Capabilities
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+  <tr><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">#</th><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">Capability</th><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">Description</th></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">1</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>Encrypted Sessions</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Mutual-TLS or token-based authenticated sessions over QUIC</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">2</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>Multi-Channel</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Independent logical channels within a single session</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">3</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>Session Recovery</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Resume sessions across network switches without re-authentication</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">4</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>Idempotent Side Effects</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Limited-window deduplication via idempotency keys</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">5</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>Causal Audit (opt-in)</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Signed event records with declared causal predecessors</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">6</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>Cross-Domain Federation</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Multi-trust-anchor routing with signed domain descriptors</td></tr>
+  <tr><td style="padding:8px">7</td><td style="padding:8px"><strong>Fault Isolation</strong></td><td style="padding:8px">Single-domain failure does not block intra-domain traffic</td></tr>
+</table>
 
-| # | Capability | Description |
-|---|---|---|
-| 1 | **Encrypted Sessions** | Mutual-TLS or token-based authenticated sessions over QUIC |
-| 2 | **Multi-Channel** | Independent logical channels within a single session |
-| 3 | **Session Recovery** | Resume sessions across network switches without re-authentication |
-| 4 | **Idempotent Side Effects** | Limited-window deduplication via idempotency keys |
-| 5 | **Structured Errors** | Numeric, machine-readable error codes with scope and retry hints |
-| 6 | **Causal Audit (opt-in)** | Signed event records with declared causal predecessors |
-| 7 | **Cross-Domain Federation** | Multi-trust-anchor routing with signed domain descriptors |
-| 8 | **Fault Isolation** | Single-domain failure does not block intra-domain traffic |
+</div>
 
----
+<p align="center">— ✦ —</p>
 
-## Why GFSIP?
+## ✦ On the Wire
 
-| Concern | GFSIP Approach |
-|---|---|
-| Central authority risk | Federation model — each domain governs itself |
-| Network disruption | Session recovery with state synchronization |
-| Duplicate operations | Application-level idempotency within a configurable window |
-| Audit & accountability | Optional signed causal event graph (Audit/1 profile) |
-| Vendor lock-in | Open specification; no proprietary components |
-| Transport lock-in | QUIC required; TCP+TLS 1.3 as optional fallback |
+<div style="max-width:880px;margin:0 auto;padding:0 16px">
 
----
+<p style="font-size:15px;line-height:1.8;color:#2C2C2C">GFSIP uses a <strong>44-byte fixed header</strong> over QUIC with ALPN <code style="background:#F5F0E6;padding:2px 6px;border-radius:3px;color:#C9A96E">gfsip/1</code>. Extension headers use deterministic CBOR (big-endian, shortest encoding). 18 standard message types (<code>0x01</code>–<code>0x16</code>) cover the full lifecycle: handshake, channel management, data transfer, session recovery, audit events, and federation routing.</p>
 
-## Repository Contents
+</div>
 
-| File | Purpose |
-|---|---|
-| `GFSIP_v1.0_protocol_spec.md` | Full protocol specification (33 sections) |
-| `gfsip-state-machine.json` | Machine-readable state machine definition |
-| `gfsip-message-schema.json` | Logical message JSON Schema |
-| `gfsip-error-registry.json` | Numeric error code registry |
-| `gfsip-conformance-checklist.csv` | Conformance test checklist |
-| `gfsip-traceability-matrix.csv` | Requirement → spec → test → implementation → responsibility mapping |
-| `CHANGELOG_v1.0.md` | v0.1 → v1.0 changelog |
-| `SHA256SUMS.txt` | File integrity checksums |
-| `reference-impl/` | **Python reference implementation** — Frame codec, session state machine, channel manager, authentication, dedupe store, resume service, audit log, federation registry, end-to-end demo, and Section 28 conformance vectors (9/9 pass) |
+<p align="center">— ✦ —</p>
 
----
+## ✦ Repository Contents
 
-## Protocol Profiles
+<div style="max-width:880px;margin:0 auto;padding:0 16px">
 
-### Core/1 — Mandatory
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+  <tr><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">File</th><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">Purpose</th></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>GFSIP_v1.0_protocol_spec.md</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Full protocol specification (33 sections)</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>gfsip-state-machine.json</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Machine-readable state machine definition</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>gfsip-message-schema.json</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Logical message JSON Schema</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>gfsip-error-registry.json</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Numeric error code registry</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>gfsip-conformance-checklist.csv</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Conformance test checklist</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>reference-impl/</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Python reference implementation — frame codec, state machine, channel manager, auth, dedupe, resume, audit, federation, end-to-end demo (9/9 conformance vectors pass)</td></tr>
+</table>
 
-Every conformant implementation **MUST** support:
+</div>
 
-- QUIC transport with ALPN `gfsip/1`
-- Version negotiation
-- Mutual authentication interface
-- Session & channel management
-- `DATA` with application-level acknowledgment (`APP_ACK`)
-- Message ID and idempotency key
-- Session recovery (resume tokens)
-- `PING` / `PONG` liveness
-- Graceful shutdown (`GOAWAY`)
-- Structured `ERROR` frames
-- Resource limit negotiation
-- Safe ignoring of unknown optional extensions
+<p align="center">— ✦ —</p>
 
-### Audit/1 — Optional
+## ✦ Protocol Profiles
 
-Adds signed causal event recording:
+<div style="max-width:880px;margin:0 auto;padding:0 16px">
 
-- `EVENT` frames with declared direct causal predecessors
-- Actor identity, rule version, and state before/after hashes
-- Deterministic event signing
-- Self-loop and known-cycle rejection
+<p style="font-size:15px;line-height:1.8;color:#2C2C2C"><strong style="color:#C9A96E">Core/1 (Mandatory)</strong> — QUIC transport, version negotiation, mutual auth, session &amp; channel management, session recovery, structured errors, and graceful shutdown.</p>
 
-### Federation/1 — Optional
+<p style="font-size:15px;line-height:1.8;color:#2C2C2C"><strong style="color:#C9A96E">Audit/1 (Optional)</strong> — Signed causal event recording with declared predecessors, actor identity, rule version, and state-before/after hashes. Self-loop and known-cycle rejection.</p>
 
-Adds cross-domain routing:
+<p style="font-size:15px;line-height:1.8;color:#2C2C2C"><strong style="color:#C9A96E">Federation/1 (Optional)</strong> — Cross-domain routing via signed <code>DomainDescriptor</code> objects, multi-trust-anchor configuration, and descriptor expiry/revocation with fault isolation.</p>
 
-- Signed `DomainDescriptor` objects
-- Multi-trust-anchor configuration
-- Cross-domain route queries (`ROUTE_QUERY` / `ROUTE_RESULT`)
-- Descriptor expiry, revocation, and fault isolation
+</div>
 
----
+<p align="center">— ✦ —</p>
 
-## On the Wire
-
-GFSIP uses a **44-byte fixed header**:
-
-```
- 0                   1                   2                   3
- 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                       Magic = "GFS1"                         |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-| Major | Minor | Type          | Flags                         |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-| Header Length                 | Reserved                      |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                         Payload Length                        |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                                                               |
-|                         Session ID (128)                      |
-|                                                               |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                          Sequence (64)                        |
-|                                                               |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                          Channel ID                           |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                 Extension Header (deterministic CBOR)         |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                         Payload (variable)                    |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-```
-
-- Extension headers use **deterministic CBOR**
-- Integers: big-endian, shortest encoding
-- 18 standard message types (`0x01`–`0x16`), `0x80`–`0xFF` reserved for private experiments
-
----
-
-## Getting Started
-
-A **Python reference implementation** is available in [`reference-impl/`](./reference-impl/).
+## ✦ Quick Start
 
 ```bash
-cd reference-impl
+git clone git@github.com:NOHN-AI/ANTARES.git
+cd ANTARES/reference-impl
 pip install -r requirements.txt
-
-# End-to-end demo (handshake → channel → data → dedupe → recovery)
-python demo.py
-
-# Section 28 minimum conformance vectors (9 tests)
-python conformance.py
+python demo.py          # end-to-end demo: handshake → channel → data → dedupe → recovery
+python conformance.py   # 9 minimum conformance vectors — all passing
 ```
 
-The reference implementation covers:
+<p align="center">— ✦ —</p>
 
-| Module | Section | Purpose |
-|---|---|---|
-| `types.py` | — | Frozen wire constants, message types, flags, states, errors |
-| `cbor_utils.py` | §7 | Deterministic CBOR encode/decode |
-| `frame.py` | §8 | 44-byte frame codec + serialization |
-| `state_machine.py` | §10 | Session states (8) + mandatory invariants (9) |
-| `channel.py` | §14 | Channel lifecycle, odd/even parity, flow control |
-| `auth.py` | §12 | HMAC proof over symmetric negotiation transcript |
-| `dedupe.py` | §15 | Limited-window idempotency store |
-| `resume.py` | §16 | Resume token issue/verify — single-use, identity-bound |
-| `audit.py` | §17 | Causal event log — self-loop / cycle rejection, signature |
-| `federation.py` | §18 | Domain descriptor validation, route loop/hop-limit detection |
-| `transport.py` | §6 | In-memory synchronous transport (swap for QUIC in production) |
-| `endpoint.py` | — | Integrated node: handshake driver, data path, recovery |
-| `conformance.py` | §28 | 9 minimum test vectors — all passing |
-| `demo.py` | — | 5-scenario end-to-end demonstration |
+## ✦ Use Cases
 
-### Implementation Order
+<div style="max-width:880px;margin:0 auto;padding:0 16px">
 
-```
- 1. Frame Codec            — 44-byte header parser/serializer
- 2. Session State Machine  — NEW → NEGOTIATING → AUTHENTICATING → ESTABLISHED → ...
- 3. QUIC Adapter           — ALPN gfsip/1 stream mapping
- 4. Authentication         — mTLS or signed-token handler
- 5. Channel Manager        — Channel lifecycle (IDLE → OPEN → CLOSED)
- 6. DATA / APP_ACK         — Application messaging with deduplication store
- 7. Resume Service         — Token-based session recovery
- 8. Core Conformance       — Pass all mandatory tests
- 9. Second Implementation  — Independent codebase for interop validation
-10. Audit/1 (optional)     — Signed causal event recording
-11. Federation/1 (opt.)    — Cross-domain descriptors and routing
-```
+- **AI Agent Networks** — Multi-agent task coordination with auditable trails across organizational boundaries
+- **Enterprise Integration** — Cross-organization workflow orchestration without a central authority
+- **IoT / Edge** — Device-to-cloud session recovery across network changes
+- **Finance / Compliance** — Signed causal audit trails for regulatory reporting
+- **Healthcare** — Federated data exchange with domain-level policy enforcement
+- **Robotics** — Reliable command channels with idempotent safety operations
 
-### Conformance
+</div>
 
-To claim **GFSIP/1.0 Core Conformant**, an implementation **MUST**:
+<p align="center">— ✦ —</p>
 
-1. Implement the 44-byte fixed header
-2. Support deterministic CBOR encoding
-3. Use QUIC with ALPN `gfsip/1`
-4. Pass all Core mandatory conformance tests
-5. Publish implementation version, configuration summary, and test report
-6. Have zero known unpatched critical security vulnerabilities
+## ✦ Project Status
 
-Audit/1 and Federation/1 conformance must be declared independently.
-See [`gfsip-conformance-checklist.csv`](./gfsip-conformance-checklist.csv).
+<div style="max-width:880px;margin:0 auto;padding:0 16px">
 
----
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+  <tr><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">Milestone</th><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">Status</th></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">Specification v1.0 (interface frozen)</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">✅ Complete</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">Machine-readable state machine &amp; schema</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">✅ Complete</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">Python reference implementation (9/9 conformance)</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">✅ Complete</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">Independent second implementation</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">🔲 In progress</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">Public interoperability report</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">🔲 Pending</td></tr>
+  <tr><td style="padding:8px">Production pilot domains</td><td style="padding:8px">🔲 Pending</td></tr>
+</table>
 
-## Use Cases
+</div>
 
-| Domain | Example |
-|---|---|
-| **Enterprise Integration** | Cross-organization workflow orchestration |
-| **AI Agent Networks** | Multi-agent task coordination with audit trail |
-| **IoT / Edge** | Device-to-cloud session recovery across network changes |
-| **Finance / Compliance** | Signed causal audit trails for regulatory reporting |
-| **Healthcare** | Federated data exchange with domain-level policy enforcement |
-| **Robotics** | Reliable command channels with idempotent safety operations |
+<p align="center">— ✦ —</p>
 
----
-
-## Project Status
-
-| Milestone | Status |
-|---|---|
-| Specification v1.0 (interface frozen) | ✅ Complete |
-| Machine-readable state machine & schema | ✅ Complete |
-| Conformance checklist & traceability matrix | ✅ Complete |
-| Two independent implementations | 🔲 In progress |
-| Public interoperability report | 🔲 Pending |
-| Independent security audit | 🔲 Pending |
-| Three production pilot domains | 🔲 Pending |
-| Formal standards body process | 🔲 Future |
-
----
-
-## Non-Goals
-
-GFSIP does **not** aim to:
-
-- Replace IP, BGP, DNS, QUIC, or TLS
-- Provide a global root of authority
-- Guarantee zero-failure communication
-- Enable communication without a physical path
-- Provide unbounded Exactly-Once semantics
-- Automatically determine legal liability
-- Infer causality from temporal ordering
-
----
-
-## Known Limitations
-
-1. Sessions cannot be recovered if both peers lose persistent state.
-2. Deduplication is bounded by window size and storage reliability.
-3. Signed events attest to byte representation, not real-world truth.
-4. Multi-trust-anchor configurations require domain-level trust policy.
-5. Gateways may refuse interconnection.
-6. No communication without an alternative physical path.
-
----
-
-## License
-
-This specification and associated artifacts are licensed under the
-**Creative Commons Attribution 4.0 International** (CC BY 4.0).
-
-You are free to share, adapt, implement, and distribute this work for
-any purpose — including commercially — provided you give appropriate
-credit to the GFSIP Contributors.
-
-See [`LICENSE`](./LICENSE) for full legal terms.
-
----
-
-## Contributing
-
-This is a v1.0 frozen specification. Contributions should target:
-
-- Implementation experience reports
-- Interoperability test results
-- Security audit findings
-- Profile extensions (via the extension registry mechanism)
-
-For the full specification, start with
-[`GFSIP_v1.0_protocol_spec.md`](./GFSIP_v1.0_protocol_spec.md).
+<p align="center">
+  <a href="https://github.com/NOHN-AI">NOHN-AI</a>
+  &nbsp;·&nbsp;
+  <a href="https://www.nohnlins.com/">nohnlins.com</a>
+  &nbsp;·&nbsp;
+  <a href="mailto:ai@nohnlins.com">ai@nohnlins.com</a>
+</p>
+<p align="center"><sub>NOHN AI · ANTARES</sub></p>

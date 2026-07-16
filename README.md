@@ -68,6 +68,7 @@ a global root of trust, central directory, or shared identity system.
 | `gfsip-traceability-matrix.csv` | Requirement → spec → test → implementation → responsibility mapping |
 | `CHANGELOG_v1.0.md` | v0.1 → v1.0 changelog |
 | `SHA256SUMS.txt` | File integrity checksums |
+| `reference-impl/` | **Python reference implementation** — Frame codec, session state machine, channel manager, authentication, dedupe store, resume service, audit log, federation registry, end-to-end demo, and Section 28 conformance vectors (9/9 pass) |
 
 ---
 
@@ -149,14 +150,37 @@ GFSIP uses a **44-byte fixed header**:
 
 ## Getting Started
 
-A Python reference implementation is available in [`reference-impl/`](./reference-impl/).
-Install dependencies and run the demo:
+A **Python reference implementation** is available in [`reference-impl/`](./reference-impl/).
 
 ```bash
 cd reference-impl
 pip install -r requirements.txt
+
+# End-to-end demo (handshake → channel → data → dedupe → recovery)
 python demo.py
+
+# Section 28 minimum conformance vectors (9 tests)
+python conformance.py
 ```
+
+The reference implementation covers:
+
+| Module | Section | Purpose |
+|---|---|---|
+| `types.py` | — | Frozen wire constants, message types, flags, states, errors |
+| `cbor_utils.py` | §7 | Deterministic CBOR encode/decode |
+| `frame.py` | §8 | 44-byte frame codec + serialization |
+| `state_machine.py` | §10 | Session states (8) + mandatory invariants (9) |
+| `channel.py` | §14 | Channel lifecycle, odd/even parity, flow control |
+| `auth.py` | §12 | HMAC proof over symmetric negotiation transcript |
+| `dedupe.py` | §15 | Limited-window idempotency store |
+| `resume.py` | §16 | Resume token issue/verify — single-use, identity-bound |
+| `audit.py` | §17 | Causal event log — self-loop / cycle rejection, signature |
+| `federation.py` | §18 | Domain descriptor validation, route loop/hop-limit detection |
+| `transport.py` | §6 | In-memory synchronous transport (swap for QUIC in production) |
+| `endpoint.py` | — | Integrated node: handshake driver, data path, recovery |
+| `conformance.py` | §28 | 9 minimum test vectors — all passing |
+| `demo.py` | — | 5-scenario end-to-end demonstration |
 
 ### Implementation Order
 

@@ -95,6 +95,9 @@ class Session:
                 return SessionState.DRAINING
             if ctx.get("path_lost", False):
                 return SessionState.DEGRADED
+            if event == MessageType.RESUME:
+                # Peer detected path loss and requested resume
+                return SessionState.RESUMING
             if event in _data_messages:
                 return SessionState.ESTABLISHED  # stable state
 

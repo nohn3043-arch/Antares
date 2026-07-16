@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  ![protocol](https://img.shields.io/badge/protocol-D4AF37?style=flat-square)  ![quic](https://img.shields.io/badge/quic-D4AF37?style=flat-square)  ![federation](https://img.shields.io/badge/federation-D4AF37?style=flat-square)
+  <img src="https://img.shields.io/badge/protocol-D4AF37?style=flat-square" alt="protocol">  <img src="https://img.shields.io/badge/quic-D4AF37?style=flat-square" alt="quic">  <img src="https://img.shields.io/badge/federation-D4AF37?style=flat-square" alt="federation">
 </p>
 
 <blockquote align="center">
@@ -14,7 +14,7 @@
 
 ## ✦ About
 
-<p style="font-size:15px;line-height:1.8;color:#2C2C2C">ANTARES 是 GFSIP v1.0——全球联邦稳定互操作协议，为服务、AI 代理、设备与组织提供加密、多通道、可恢复的跨域通信，且无需中心权威。它基于 QUIC 强制传输层与确定性 CBOR，内置会话恢复、幂等去重与因果审计，是构建去中心化网络的稳定底座。</p>
+<p style="font-size:15px;line-height:1.8;color:#2C2C2C">ANTARES is GFSIP v1.0 — the Global Federated Stable Interoperability Protocol. It provides encrypted, multi-channel, recoverable cross-domain communication for services, AI agents, devices, and organizations with no central authority required. Built on QUIC as the mandatory transport layer and deterministic CBOR serialization, it includes built-in session recovery, idempotent deduplication, and causal auditing as the stable foundation for decentralized networks.</p>
 
 <p align="center">
   <img src="assets/overview.svg" alt="ANTARES overview" style="width:100%">

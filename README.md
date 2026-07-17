@@ -4,7 +4,7 @@
 
 <div align="center">
 
-![ANTARES Banner](assets/banner.svg)
+[ANTARES Banner](assets/banner.svg)
 
 **GFSIP/1.0: Global Federated Stable Interoperability Protocol**
 

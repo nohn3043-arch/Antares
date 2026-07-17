@@ -88,7 +88,11 @@ ANTARES 是 **GFSIP v1.0（全球联邦稳定互操作协议）** 的开源实�
 | `0x0B` | SESSION_CLOSE | 会话关闭 |
 | `0x0C` | SESSION_RECOVERY | 会话恢复 |
 | `0x0D` | RESUME_TOKEN | 恢复令牌 |
-| ... | ... | ... |
+| `0x0E` | RESUME_REQUEST | 恢复请求 |
+| `0x0F` | RESUME_RESPONSE | 恢复响应 |
+| `0x10` | HEARTBEAT | 心跳检测 |
+| `0x11` | HEARTBEAT_ACK | 心跳响应 |
+| `0x12` | ERROR | 错误通知 |
 
 ---
 
@@ -96,11 +100,12 @@ ANTARES 是 **GFSIP v1.0（全球联邦稳定互操作协议）** 的开源实�
 
 | 文件/目录 | 说明 |
 |-----------|------|
-| `GFSIP_v1.0_protocol_spec.md` | 完整协议规范（33 个章节） |
+| `GFSIP_v1.0_protocol_spec.md` | 完整协议规范（34 个章节） |
 | `gfsip-state-machine.json` | 机器可读状态机定义 |
 | `gfsip-message-schema.json` | 消息 JSON Schema |
 | `gfsip-error-registry.json` | 错误码注册表 |
 | `gfsip-conformance-checklist.csv` | 一致性测试清单 |
+| `gfsip-traceability-matrix.csv` | 需求追踪矩阵 |
 | `reference-impl/` | Python 参考实现 |
 
 ### Python 参考实现模块
@@ -118,6 +123,8 @@ ANTARES 是 **GFSIP v1.0（全球联邦稳定互操作协议）** 的开源实�
 | `resume.py` | 会话恢复服务 |
 | `state_machine.py` | 会话状态机 |
 | `transport.py` | QUIC 传输抽象层 |
+| `types.py` | 类型定义与枚举 |
+| `cbor_utils.py` | CBOR 编码工具 |
 
 ---
 
@@ -143,8 +150,8 @@ python demo.py
 # 输出: 握手 → 通道建立 → 数据传输 → 去重测试 → 恢复测试
 
 # 运行一致性测试
-python conformance.py
-# 输出: 9 个一致性向量测试结果
+python -m gfsip.conformance
+# 输出: 10 个一致性向量测试结果
 ```
 
 ### 演示流程说明
@@ -206,7 +213,7 @@ python conformance.py
 |--------|------|
 | 规范 v1.0（接口冻结） | ✅ 完成 |
 | 机器可读状态机与 Schema | ✅ 完成 |
-| Python 参考实现（9/9 一致性） | ✅ 完成 |
+| Python 参考实现（10/10 一致性） | ✅ 完成 |
 | 独立第二实现 | 🔲 进行中 |
 | 公开互操作性报告 | 🔲 待定 |
 | 生产试点域 | 🔲 待定 |
@@ -226,6 +233,7 @@ python conformance.py
 - 参考 `conformance.py` 确保一致性
 - 遵循 `gfsip-state-machine.json` 状态转移规则
 - 使用 `gfsip-message-schema.json` 验证消息格式
+- 运行 `python -m gfsip.conformance` 验证实现
 
 ---
 

@@ -247,7 +247,7 @@ python -m gfsip.conformance
 
 - **项目地址**: https://gitee.com/nohn-ecosystem/antares
 - **组织**: NOHN AI
-- **邮箱**: ai@nohnlins.com
+- **邮箱**: lin@secondai.top
 - **官网**: https://www.nohnlins.com/
 
 ---

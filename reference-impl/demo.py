@@ -19,6 +19,8 @@ from gfsip import (
     SessionState, MessageType, ErrorCode,
 )
 from gfsip import conformance as conf
+from gfsip.signing import make_trust_pair
+from gfsip.business import SimpleKVStore
 
 
 def sep(title: str) -> None:
@@ -29,12 +31,21 @@ def sep(title: str) -> None:
 
 def mk_pair():
     a, b = make_link_pair()
-    init = Endpoint(node_id="urn:gfsip:node:agent-a",
+    init_id = "urn:gfsip:node:agent-a"
+    resp_id = "urn:gfsip:node:svc-b"
+    (priv_i, anchors_i), (priv_r, anchors_r) = make_trust_pair(init_id, resp_id)
+    # responder runs a deterministic business handler so DATA frames produce
+    # real, reproducible state transitions and result hashes
+    kv = SimpleKVStore()
+    init = Endpoint(node_id=init_id,
                     domain_id="urn:gfsip:domain:acme",
-                    is_initiator=True, link=a, shared_secret=b"demo-secret")
-    resp = Endpoint(node_id="urn:gfsip:node:svc-b",
+                    is_initiator=True, link=a, shared_secret=b"demo-secret",
+                    signing_key=priv_i, trust_anchors=anchors_i)
+    resp = Endpoint(node_id=resp_id,
                     domain_id="urn:gfsip:domain:globex",
-                    is_initiator=False, link=b, shared_secret=b"demo-secret")
+                    is_initiator=False, link=b, shared_secret=b"demo-secret",
+                    signing_key=priv_r, trust_anchors=anchors_r,
+                    business_handler=kv)
     return init, resp
 
 
@@ -83,6 +94,11 @@ ok3 = side == 1
 print(f"  side-effect count for duplicate key = {side} (expected 1)")
 print(f"  [{'PASS' if ok3 else 'FAIL'}] idempotency enforced")
 
+# ── 3b. Real business state + signed audit events ──────────
+kv = resp._business_handler
+print(f"  reserved state (real, reproducible): {kv.state}")
+print(f"  audit events recorded              : {resp.audit.count()}")
+
 
 # ── 4. Session recovery ────────────────────────────────────
 sep("4. SESSION RECOVERY  (path loss -> resume token)")
@@ -115,10 +131,12 @@ rows = [
     ("gfsip/frame.py", "44-byte frame codec + validation"),
     ("gfsip/state_machine.py", "Session states + 9 invariants"),
     ("gfsip/channel.py", "Channel lifecycle, parity, flow control"),
-    ("gfsip/auth.py", "Auth proofs over handshake transcript"),
+    ("gfsip/auth.py", "Ed25519 auth proofs over transcript"),
     ("gfsip/dedupe.py", "Limited-window idempotency store"),
     ("gfsip/resume.py", "Resume token bind / single-use"),
-    ("gfsip/audit.py", "Audit/1 causal events + cycle reject"),
+    ("gfsip/audit.py", "Audit/1 causal events + Ed25519 sign"),
+    ("gfsip/signing.py", "Ed25519 sign/verify + trust anchors"),
+    ("gfsip/business.py", "Pluggable side-effect handler + KV"),
     ("gfsip/federation.py", "Domain descriptor + route loop/hop"),
     ("gfsip/transport.py", "In-memory sync transport (QUIC-ready)"),
     ("gfsip/endpoint.py", "Integrated node: handshake/data/resume"),

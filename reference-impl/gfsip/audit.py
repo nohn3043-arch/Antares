@@ -17,6 +17,7 @@ from typing import Optional
 
 from .types import ErrorCode, MAX_PARENT_EVENTS
 from .cbor_utils import encode_deterministic
+from .signing import sign as ed25519_sign, verify as ed25519_verify
 
 
 @dataclass
@@ -46,9 +47,11 @@ class AuditError(Exception):
 
 
 class AuditLog:
-    def __init__(self, protocol_version: str = "1.0", session_id: bytes = b""):
+    def __init__(self, protocol_version: str = "1.0", session_id: bytes = b"",
+                 signing_key: Optional[bytes] = None):
         self.protocol_version = protocol_version
         self.session_id = session_id
+        self._signing_key = signing_key  # raw 32-byte Ed25519 private key
         self._events: dict[str, AuditEvent] = {}
         self._children: dict[str, set] = {}  # parent -> children
 
@@ -67,7 +70,7 @@ class AuditLog:
                 stack.append(child)
         return False
 
-    def add(self, event: AuditEvent, signing_key: bytes) -> str:
+    def add(self, event: AuditEvent) -> str:
         # Invariant: parent count bound
         if len(event.parent_event_ids) > MAX_PARENT_EVENTS:
             raise AuditError(ErrorCode.CAUSAL_CYCLE,
@@ -81,14 +84,17 @@ class AuditLog:
         # Missing parents => unresolved (not rejected)
         event.unresolved_parents = [p for p in event.parent_event_ids
                                     if p not in self._events]
-        # signature over canonical bytes
-        event.signature = self._sign(event, signing_key)
+        # signature over canonical bytes (Ed25519)
+        if self._signing_key is None:
+            raise AuditError(ErrorCode.INTERNAL_ERROR,
+                             "AuditLog requires an Ed25519 signing_key to sign events")
+        event.signature = self._sign(event)
         self._events[event.event_id] = event
         for p in event.parent_event_ids:
             self._children.setdefault(p, set()).add(event.event_id)
         return event.signature
 
-    def _sign(self, event: AuditEvent, signing_key: bytes) -> str:
+    def _canonical_bytes(self, event: AuditEvent) -> bytes:
         header = {
             "eid": event.event_id,
             "par": event.parent_event_ids,
@@ -104,7 +110,7 @@ class AuditLog:
             "ob": event.observed_at,
             "lc": event.logical_clock,
         }
-        canonical = encode_deterministic({
+        return encode_deterministic({
             "ver": self.protocol_version,
             "sid": self.session_id,
             "hdr": header,
@@ -112,10 +118,21 @@ class AuditLog:
                 f"{event.event_type}:{event.result_code}".encode()
             ).hexdigest(),
         })
-        return hashlib.sha256(canonical + signing_key).hexdigest()
 
-    def verify_signature(self, event: AuditEvent, signing_key: bytes) -> bool:
-        return event.signature == self._sign(event, signing_key)
+    def _sign(self, event: AuditEvent) -> str:
+        return ed25519_sign(self._signing_key, self._canonical_bytes(event)).hex()
+
+    def verify_signature(self, event: AuditEvent, public_key: bytes) -> bool:
+        """Verify an event's Ed25519 signature with the actor's public key.
+
+        Any third party holding the public key can call this independently —
+        no shared secret required.
+        """
+        try:
+            sig = bytes.fromhex(event.signature)
+        except (ValueError, TypeError):
+            return False
+        return ed25519_verify(public_key, self._canonical_bytes(event), sig)
 
     def count(self) -> int:
         return len(self._events)

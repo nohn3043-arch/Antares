@@ -16,14 +16,20 @@ from .audit import AuditLog, AuditEvent, AuditError
 from .federation import FederationRegistry, FederationError, DomainDescriptor
 from .endpoint import Endpoint, ProtocolError
 from .transport import make_link_pair
+from .signing import make_trust_pair
 
 
 def _pair(secret: bytes = b"test-secret") -> tuple:
     a, b = make_link_pair()
-    init = Endpoint(node_id="urn:gfsip:node:init", domain_id="urn:gfsip:domain:a",
-                    is_initiator=True, link=a, shared_secret=secret)
-    resp = Endpoint(node_id="urn:gfsip:node:resp", domain_id="urn:gfsip:domain:b",
-                     is_initiator=False, link=b, shared_secret=secret)
+    init_id = "urn:gfsip:node:init"
+    resp_id = "urn:gfsip:node:resp"
+    (priv_i, anchors_i), (priv_r, anchors_r) = make_trust_pair(init_id, resp_id)
+    init = Endpoint(node_id=init_id, domain_id="urn:gfsip:domain:a",
+                    is_initiator=True, link=a, shared_secret=secret,
+                    signing_key=priv_i, trust_anchors=anchors_i)
+    resp = Endpoint(node_id=resp_id, domain_id="urn:gfsip:domain:b",
+                     is_initiator=False, link=b, shared_secret=secret,
+                     signing_key=priv_r, trust_anchors=anchors_r)
     return init, resp
 
 
@@ -87,7 +93,7 @@ def v_causal_cycle() -> tuple:
     log = AuditLog(session_id=os.urandom(16))
     ev = AuditEvent(event_id="e1", parent_event_ids=["e1"])
     try:
-        log.add(ev, b"key")
+        log.add(ev)
         return ("EVENT self-parent -> CAUSAL_CYCLE", False, "no error")
     except AuditError as e:
         return ("EVENT self-parent -> CAUSAL_CYCLE",

@@ -1,19 +1,22 @@
 """GFSIP/1.0 Authentication & Authorization (Sections 11, 12).
 
-Reference implementation uses HMAC-SHA256 over the handshake transcript to
-simulate a "signature over transcript". Production MUST use the negotiated
-method (mtls / signed-token / psk / hardware-attested) with real asymmetric
-signatures and a verified certificate/key chain.
+Produces and verifies Ed25519 signatures over the handshake transcript for
+SIGNED_TOKEN and MTLS methods. The peer's public key is resolved through a
+trust-anchor registry keyed by a stable key_id, so two nodes authenticate
+without pre-sharing a symmetric secret.
+
+PSK and HARDWARE_ATTESTED remain declared but intentionally unimplemented in
+the reference node (production integrates KMS/HSM-backed attestation).
 """
 
 import hashlib
-import hmac
 import time
 from dataclasses import dataclass
 from enum import Enum
 from typing import Optional
 
 from .types import ErrorCode
+from .signing import sign as ed25519_sign, verify as ed25519_verify, TrustAnchorRegistry
 
 
 class AuthMethod(str, Enum):
@@ -27,7 +30,7 @@ class AuthMethod(str, Enum):
 class AuthProof:
     method: str
     credential: str
-    proof: str            # hex HMAC / signature over transcript
+    proof: str            # hex Ed25519 signature over the transcript
     key_id: str
     expires_at: float     # epoch seconds
     transcript_hash: str  # hex of transcript digest this proof covers
@@ -41,24 +44,30 @@ class AuthError(Exception):
 
 
 class Authenticator:
-    """Builds and verifies authentication proofs (Section 12)."""
+    """Builds and verifies Ed25519 authentication proofs (Section 12)."""
 
-    def __init__(self, node_id: str, domain_id: str, shared_secret: bytes):
+    def __init__(self, node_id: str, domain_id: str, signing_key: bytes,
+                 trust_anchors: Optional[TrustAnchorRegistry] = None):
         self.node_id = node_id
         self.domain_id = domain_id
-        self._secret = shared_secret
+        self._signing_key = signing_key  # raw 32-byte Ed25519 private key
+        self._trust_anchors = trust_anchors or TrustAnchorRegistry()
 
-    def _transcript_digest(self, transcript: bytes) -> str:
+    @staticmethod
+    def _transcript_digest(transcript: bytes) -> str:
         return hashlib.sha256(transcript).hexdigest()
 
     def make_proof(self, method: AuthMethod, key_id: str,
                    transcript: bytes, ttl: float = 300.0) -> AuthProof:
+        if method not in (AuthMethod.SIGNED_TOKEN, AuthMethod.MTLS):
+            raise AuthError(ErrorCode.AUTH_FAILED,
+                            f"{method.value} requires KMS/HSM-backed integration")
         digest = self._transcript_digest(transcript)
-        mac = hmac.new(self._secret, digest.encode(), hashlib.sha256).hexdigest()
+        sig = ed25519_sign(self._signing_key, transcript)
         return AuthProof(
             method=method.value,
-            credential=f"ref:{key_id}",
-            proof=mac,
+            credential=f"ed25519:{key_id}",
+            proof=sig.hex(),
             key_id=key_id,
             expires_at=time.time() + ttl,
             transcript_hash=digest,
@@ -71,13 +80,20 @@ class Authenticator:
             raise AuthError(ErrorCode.AUTH_FAILED, f"Unknown method {proof.method}")
         if time.time() > proof.expires_at:
             raise AuthError(ErrorCode.AUTH_FAILED, "Credential expired")
-        digest = self._transcript_digest(transcript)
-        if proof.transcript_hash != digest:
+        if proof.transcript_hash != self._transcript_digest(transcript):
             raise AuthError(ErrorCode.AUTH_FAILED,
                             "Transcript mismatch (downgrade/replay suspected)")
-        expected = hmac.new(self._secret, digest.encode(), hashlib.sha256).hexdigest()
-        if not hmac.compare_digest(proof.proof, expected):
-            raise AuthError(ErrorCode.AUTH_FAILED, "Proof signature invalid")
-        # Node identity is bound but NOT sufficient for authorization alone.
+        # Node identity is bound to the key_id but NOT sufficient for
+        # authorization alone (authorization is a policy layer above).
         if expected_node_id and expected_node_id not in proof.key_id:
             raise AuthError(ErrorCode.AUTH_FAILED, "Key id does not match node")
+        public_key = self._trust_anchors.get(proof.key_id)
+        if public_key is None:
+            raise AuthError(ErrorCode.AUTH_FAILED,
+                            f"Unknown key_id {proof.key_id}")
+        try:
+            sig = bytes.fromhex(proof.proof)
+        except (ValueError, TypeError):
+            raise AuthError(ErrorCode.AUTH_FAILED, "Malformed proof signature")
+        if not ed25519_verify(public_key, transcript, sig):
+            raise AuthError(ErrorCode.AUTH_FAILED, "Proof signature invalid")

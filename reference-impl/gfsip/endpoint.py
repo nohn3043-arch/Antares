@@ -6,6 +6,8 @@ registry into one runnable node. Uses the synchronous in-memory Link
 transport; production swaps the transport for a QUIC adapter.
 """
 
+import hashlib
+import json
 import os
 import time
 import uuid
@@ -24,6 +26,8 @@ from .audit import AuditLog, AuditEvent, AuditError
 from .federation import FederationRegistry, FederationError, DomainDescriptor
 from .transport import Link
 from .cbor_utils import encode_deterministic
+from .signing import TrustAnchorRegistry, key_id_for
+from .business import BusinessHandler
 
 
 class ProtocolError(Exception):
@@ -41,6 +45,9 @@ _DEFAULT_PROFILES = [Profile.CORE, Profile.AUDIT, Profile.FEDERATION]
 class Endpoint:
     def __init__(self, *, node_id: str, domain_id: str, is_initiator: bool,
                  link: Link, shared_secret: bytes,
+                 signing_key: bytes = None,
+                 trust_anchors: TrustAnchorRegistry = None,
+                 business_handler: BusinessHandler = None,
                  profiles: list = None, max_channels: int = 128,
                  dedupe_window: float = 3600, auth_method: AuthMethod = AuthMethod.SIGNED_TOKEN):
         self.node_id = node_id
@@ -51,12 +58,16 @@ class Endpoint:
         self.requested_profiles = profiles or list(_DEFAULT_PROFILES)
         self.auth_method = auth_method
 
+        self._signing_key = signing_key
+        self._business_handler = business_handler
+
         self.session = Session(node_id=node_id, domain_id=domain_id, max_channels=max_channels)
         self.channels = ChannelManager(is_initiator, max_channels)
         self.dedupe = DedupeStore(dedupe_window)
-        self.auth = Authenticator(node_id, domain_id, shared_secret)
+        self.auth = Authenticator(node_id, domain_id, signing_key, trust_anchors)
         self._resume_svc = ResumeService(shared_secret)
-        self.audit = AuditLog(protocol_version="1.0", session_id=b"")
+        self.audit = AuditLog(protocol_version="1.0", session_id=b"",
+                              signing_key=signing_key)
         self.federation = FederationRegistry(domain_id, shared_secret)
 
         self._seq = 0
@@ -253,7 +264,7 @@ class Endpoint:
 
     def _send_auth(self) -> None:
         proof = self.auth.make_proof(self.auth_method,
-                                     key_id=f"urn:gfsip:key:{self.node_id}:{int(time.time())}",
+                                     key_id=key_id_for(self.node_id),
                                      transcript=self._negotiation_transcript_bytes())
         ext = {
             "method": proof.method,
@@ -397,11 +408,56 @@ class Endpoint:
             if outcome == DedupeOutcome.IN_PROGRESS:
                 self._send_app_ack(ext, status="in_progress")
                 return
-        # ACCEPTED: execute (here: no-op), record completion
-        result_hash = "sha256:" + os.urandom(8).hex()
+
+        operation = ext.get("operation", "")
+        payload = frame.payload or b""
+
+        if self._business_handler is not None:
+            # ACCEPTED: execute the handler, derive a real, reproducible result hash
+            state_before = self._business_handler.state_hash(self._business_handler.state)
+            new_state, result = self._business_handler.execute(
+                operation, payload, self._business_handler.state)
+            self._business_handler.state = new_state
+            state_after = self._business_handler.state_hash(new_state)
+            result_hash = "sha256:" + hashlib.sha256(
+                encode_deterministic({
+                    "operation": operation,
+                    "state_before": state_before,
+                    "state_after": state_after,
+                    "result": result,
+                })
+            ).hexdigest()
+            self._record_audit(operation, payload, state_before, state_after)
+        else:
+            # No handler: hash the raw payload (deterministic, not random).
+            result_hash = "sha256:" + hashlib.sha256(payload).hexdigest()
+
         if key:
             self.dedupe.complete(key, result_hash)
         self._send_app_ack(ext, status="accepted", result_hash=result_hash)
+
+    def _record_audit(self, operation: str, payload: bytes,
+                      state_before: str, state_after: str) -> None:
+        """Record a real Audit/1 causal event for an executed side effect."""
+        try:
+            event = AuditEvent(
+                event_id=str(uuid.uuid4()),
+                parent_event_ids=[],
+                actor_node_id=self.node_id,
+                actor_domain_id=self.domain_id,
+                event_type="data.execute",
+                rule_id=operation,
+                rule_version="1.0",
+                state_before_hash=state_before,
+                state_after_hash=state_after,
+                evidence_hash="sha256:" + hashlib.sha256(payload).hexdigest(),
+                result_code="OK",
+                observed_at=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                logical_clock=self._seq,
+            )
+            self.audit.add(event)
+        except AuditError:
+            pass
 
     def _send_app_ack(self, ext: dict, *, status: str, result_hash: str = "") -> None:
         ack = {
@@ -413,6 +469,17 @@ class Endpoint:
         }
         self._send(MessageType.APP_ACK, ext=ack, channel_id=0)
 
+    def _state_digest(self) -> str:
+        """Deterministic digest of resume-relevant state (not a random placeholder)."""
+        if self._business_handler is not None:
+            return self._business_handler.state_hash(self._business_handler.state)
+        material = encode_deterministic({
+            "open_channels": self.channels.open_channels(),
+            "last_sent_sequence": self._seq,
+            "last_received_sequence": self._peer_last_seq,
+        })
+        return "sha256:" + hashlib.sha256(material).hexdigest()
+
     # ── recovery ────────────────────────────────────────────
     def resume(self, peer: "Endpoint") -> None:
         """Degrade and resume using the issued token (Section 16)."""
@@ -423,7 +490,7 @@ class Endpoint:
             "last_received_sequence": self._peer_last_seq,
             "last_sent_sequence": self._seq,
             "open_channels": self.channels.open_channels(),
-            "state_digest": "sha256:" + os.urandom(8).hex(),
+            "state_digest": self._state_digest(),
             "resume_nonce": os.urandom(32),
         }
         self.session.transition(MessageType.RESUME)

@@ -7,14 +7,14 @@
 </p>
 
 <blockquote align="center">
-  <em>Global Federated Stable Interoperability Protocol v1.0</em>
+  <em>全球联邦化稳定互操作协议 v1.0（Global Federated Stable Interoperability Protocol）</em>
 </blockquote>
 
 <div style="max-width:880px;margin:0 auto;padding:0 16px">
 
-## ✦ About
+## ✦ 关于
 
-<p style="font-size:15px;line-height:1.8;color:#2C2C2C">ANTARES is GFSIP v1.0 — the Global Federated Stable Interoperability Protocol. It provides encrypted, multi-channel, recoverable cross-domain communication for services, AI agents, devices, and organizations with no central authority required. Built on QUIC as the mandatory transport layer and deterministic CBOR serialization, it includes built-in session recovery, idempotent deduplication, and causal auditing as the stable foundation for decentralized networks.</p>
+<p style="font-size:15px;line-height:1.8;color:#2C2C2C">ANTARES 即 GFSIP v1.0——全球联邦化稳定互操作协议。它为服务、AI 智能体、设备与组织提供加密、多通道、可恢复的跨域通信，且无需中心化权威节点。协议以 QUIC 为强制传输层，采用确定性 CBOR 序列化，内置会话恢复、幂等去重与因果审计，是去中心化网络的稳定基石。</p>
 
 <p align="center">
   <img src="assets/overview.svg" alt="ANTARES overview" style="width:100%">
@@ -24,106 +24,106 @@
 
 <p align="center">— ✦ —</p>
 
-## ✦ Key Capabilities
+## ✦ 核心能力
 
 <div style="max-width:880px;margin:0 auto;padding:0 16px">
 
 <table style="width:100%;border-collapse:collapse;font-size:14px">
-  <tr><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">#</th><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">Capability</th><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">Description</th></tr>
-  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">1</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>Encrypted Sessions</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Mutual-TLS or token-based authenticated sessions over QUIC</td></tr>
-  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">2</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>Multi-Channel</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Independent logical channels within a single session</td></tr>
-  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">3</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>Session Recovery</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Resume sessions across network switches without re-authentication</td></tr>
-  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">4</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>Idempotent Side Effects</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Limited-window deduplication via idempotency keys</td></tr>
-  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">5</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>Causal Audit (opt-in)</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Signed event records with declared causal predecessors</td></tr>
-  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">6</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>Cross-Domain Federation</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Multi-trust-anchor routing with signed domain descriptors</td></tr>
-  <tr><td style="padding:8px">7</td><td style="padding:8px"><strong>Fault Isolation</strong></td><td style="padding:8px">Single-domain failure does not block intra-domain traffic</td></tr>
+  <tr><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">#</th><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">能力</th><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">说明</th></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">1</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>加密会话</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">基于 QUIC 的双向 TLS 或令牌认证会话</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">2</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>多通道</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">单个会话内相互独立的逻辑通道</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">3</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>会话恢复</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">跨网络切换恢复会话，无需重新认证</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">4</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>幂等副作用</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">基于幂等键的有限窗口去重</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">5</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>因果审计（可选）</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">带声明因果前驱的签名事件记录</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">6</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>跨域联邦</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">基于签名域描述符的多信任锚路由</td></tr>
+  <tr><td style="padding:8px">7</td><td style="padding:8px"><strong>故障隔离</strong></td><td style="padding:8px">单域故障不会阻塞域内流量</td></tr>
 </table>
 
 </div>
 
 <p align="center">— ✦ —</p>
 
-## ✦ On the Wire
+## ✦ 线协议
 
 <div style="max-width:880px;margin:0 auto;padding:0 16px">
 
-<p style="font-size:15px;line-height:1.8;color:#2C2C2C">GFSIP uses a <strong>44-byte fixed header</strong> over QUIC with ALPN <code style="background:#F5F0E6;padding:2px 6px;border-radius:3px;color:#C9A96E">gfsip/1</code>. Extension headers use deterministic CBOR (big-endian, shortest encoding). 18 standard message types (<code>0x01</code>–<code>0x16</code>) cover the full lifecycle: handshake, channel management, data transfer, session recovery, audit events, and federation routing.</p>
+<p style="font-size:15px;line-height:1.8;color:#2C2C2C">GFSIP 在 QUIC 之上使用 <strong>44 字节固定头部</strong>，ALPN 为 <code style="background:#F5F0E6;padding:2px 6px;border-radius:3px;color:#C9A96E">gfsip/1</code>。扩展头部采用确定性 CBOR（大端、最短编码）。18 种标准消息类型（<code>0x01</code>–<code>0x16</code>）覆盖完整生命周期：握手、通道管理、数据传输、会话恢复、审计事件与联邦路由。</p>
 
 </div>
 
 <p align="center">— ✦ —</p>
 
-## ✦ Repository Contents
+## ✦ 仓库内容
 
 <div style="max-width:880px;margin:0 auto;padding:0 16px">
 
 <table style="width:100%;border-collapse:collapse;font-size:14px">
-  <tr><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">File</th><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">Purpose</th></tr>
-  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>GFSIP_v1.0_protocol_spec.md</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Full protocol specification (33 sections)</td></tr>
-  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>gfsip-state-machine.json</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Machine-readable state machine definition</td></tr>
-  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>gfsip-message-schema.json</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Logical message JSON Schema</td></tr>
-  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>gfsip-error-registry.json</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Numeric error code registry</td></tr>
-  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>gfsip-conformance-checklist.csv</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Conformance test checklist</td></tr>
-  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>reference-impl/</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Python reference implementation — frame codec, state machine, channel manager, auth, dedupe, resume, audit, federation, end-to-end demo (9/9 conformance vectors pass)</td></tr>
+  <tr><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">文件</th><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">用途</th></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>GFSIP_v1.0_protocol_spec.md</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">完整协议规范（33 节）</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>gfsip-state-machine.json</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">机器可读的状态机定义</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>gfsip-message-schema.json</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">逻辑消息 JSON Schema</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>gfsip-error-registry.json</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">数字错误码注册表</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>gfsip-conformance-checklist.csv</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">一致性测试检查清单</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>reference-impl/</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Python 参考实现——帧编解码、状态机、通道管理、认证、去重、恢复、审计、联邦、端到端演示（9/9 一致性向量全部通过）</td></tr>
 </table>
 
 </div>
 
 <p align="center">— ✦ —</p>
 
-## ✦ Protocol Profiles
+## ✦ 协议档位
 
 <div style="max-width:880px;margin:0 auto;padding:0 16px">
 
-<p style="font-size:15px;line-height:1.8;color:#2C2C2C"><strong style="color:#C9A96E">Core/1 (Mandatory)</strong> — QUIC transport, version negotiation, mutual auth, session &amp; channel management, session recovery, structured errors, and graceful shutdown.</p>
+<p style="font-size:15px;line-height:1.8;color:#2C2C2C"><strong style="color:#C9A96E">Core/1（强制）</strong> —— QUIC 传输、版本协商、双向认证、会话与通道管理、会话恢复、结构化错误与优雅关闭。</p>
 
-<p style="font-size:15px;line-height:1.8;color:#2C2C2C"><strong style="color:#C9A96E">Audit/1 (Optional)</strong> — Signed causal event recording with declared predecessors, actor identity, rule version, and state-before/after hashes. Self-loop and known-cycle rejection.</p>
+<p style="font-size:15px;line-height:1.8;color:#2C2C2C"><strong style="color:#C9A96E">Audit/1（可选）</strong> —— 带声明前驱、行为者身份、规则版本与状态前后哈希的签名因果事件记录。拒绝自环与已知环。</p>
 
-<p style="font-size:15px;line-height:1.8;color:#2C2C2C"><strong style="color:#C9A96E">Federation/1 (Optional)</strong> — Cross-domain routing via signed <code>DomainDescriptor</code> objects, multi-trust-anchor configuration, and descriptor expiry/revocation with fault isolation.</p>
+<p style="font-size:15px;line-height:1.8;color:#2C2C2C"><strong style="color:#C9A96E">Federation/1（可选）</strong> —— 通过签名的 <code>DomainDescriptor</code> 对象进行跨域路由，多信任锚配置，以及带故障隔离的描述符过期/撤销机制。</p>
 
 </div>
 
 <p align="center">— ✦ —</p>
 
-## ✦ Quick Start
+## ✦ 快速开始
 
 ```bash
 git clone git@github.com:NOHN-AI/ANTARES.git
 cd ANTARES/reference-impl
 pip install -r requirements.txt
-python demo.py          # end-to-end demo: handshake → channel → data → dedupe → recovery
-python conformance.py   # 9 minimum conformance vectors — all passing
+python demo.py          # 端到端演示：握手 → 通道 → 数据 → 去重 → 恢复
+python conformance.py   # 9 个最小一致性向量——全部通过
 ```
 
 <p align="center">— ✦ —</p>
 
-## ✦ Use Cases
+## ✦ 使用场景
 
 <div style="max-width:880px;margin:0 auto;padding:0 16px">
 
-- **AI Agent Networks** — Multi-agent task coordination with auditable trails across organizational boundaries
-- **Enterprise Integration** — Cross-organization workflow orchestration without a central authority
-- **IoT / Edge** — Device-to-cloud session recovery across network changes
-- **Finance / Compliance** — Signed causal audit trails for regulatory reporting
-- **Healthcare** — Federated data exchange with domain-level policy enforcement
-- **Robotics** — Reliable command channels with idempotent safety operations
+- **AI 智能体网络** —— 跨组织边界、带可审计轨迹的多智能体任务协同
+- **企业集成** —— 无需中心化权威节点的跨组织工作流编排
+- **IoT / 边缘** —— 跨网络变化的设备到云会话恢复
+- **金融 / 合规** —— 用于监管报告的可签名因果审计轨迹
+- **医疗健康** —— 带域级策略执行的联邦数据交换
+- **机器人** —— 带幂等安全操作的可靠指令通道
 
 </div>
 
 <p align="center">— ✦ —</p>
 
-## ✦ Project Status
+## ✦ 项目状态
 
 <div style="max-width:880px;margin:0 auto;padding:0 16px">
 
 <table style="width:100%;border-collapse:collapse;font-size:14px">
-  <tr><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">Milestone</th><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">Status</th></tr>
-  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">Specification v1.0 (interface frozen)</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">✅ Complete</td></tr>
-  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">Machine-readable state machine &amp; schema</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">✅ Complete</td></tr>
-  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">Python reference implementation (9/9 conformance)</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">✅ Complete</td></tr>
-  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">Independent second implementation</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">🔲 In progress</td></tr>
-  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">Public interoperability report</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">🔲 Pending</td></tr>
-  <tr><td style="padding:8px">Production pilot domains</td><td style="padding:8px">🔲 Pending</td></tr>
+  <tr><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">里程碑</th><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">状态</th></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">规范 v1.0（接口已冻结）</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">✅ 完成</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">机器可读状态机与 Schema</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">✅ 完成</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">Python 参考实现（9/9 一致性）</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">✅ 完成</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">独立的第二实现</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">🔲 进行中</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">公开互操作性报告</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">🔲 待办</td></tr>
+  <tr><td style="padding:8px">生产试点域</td><td style="padding:8px">🔲 待办</td></tr>
 </table>
 
 </div>

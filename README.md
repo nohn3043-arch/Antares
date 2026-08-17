@@ -3,7 +3,10 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/protocol-D4AF37?style=flat-square" alt="protocol">  <img src="https://img.shields.io/badge/quic-D4AF37?style=flat-square" alt="quic">  <img src="https://img.shields.io/badge/federation-D4AF37?style=flat-square" alt="federation">
+  <img src="https://img.shields.io/badge/protocol-D4AF37?style=flat-square" alt="protocol">
+  <img src="https://img.shields.io/badge/quic-D4AF37?style=flat-square" alt="quic">
+  <img src="https://img.shields.io/badge/federation-D4AF37?style=flat-square" alt="federation">
+  <img src="https://img.shields.io/badge/gfsip-v1.0-D4AF37?style=flat-square" alt="gfsip-v1.0">
 </p>
 
 <blockquote align="center">
@@ -88,11 +91,14 @@
 ## ✦ Quick Start
 
 ```bash
-git clone git@github.com:NOHN-AI/ANTARES.git
-cd ANTARES/reference-impl
+# Primary: GitHub
+git clone https://github.com/nohn3043-arch/Antares.git
+# Mirror: Gitee
+# git clone https://gitee.com/nohn-ecosystem/Antares.git
+cd Antares/reference-impl
 pip install -r requirements.txt
-python demo.py          # end-to-end demo: handshake → channel → data → dedupe → recovery
-python conformance.py   # 9 minimum conformance vectors — all passing
+python demo.py                # end-to-end demo: handshake → channel → data → dedupe → recovery
+python gfsip/conformance.py   # 9/9 Section-28 minimum conformance vectors — all passing
 ```
 
 <p align="center">— ✦ —</p>
@@ -130,11 +136,34 @@ python conformance.py   # 9 minimum conformance vectors — all passing
 
 <p align="center">— ✦ —</p>
 
+## ✦ Ecosystem
+
+ANTARES is one member of the NOHN AI ecosystem — a family of projects built around second-perspective causal audit and deterministic execution:
+
+| Project | Repository | What it is |
+|---|---|---|
+| **Second-Perspective (GCAE)** | [nohn3043-arch/second-perspective](https://github.com/nohn3043-arch/second-perspective) | Global cognitive audit engine — the five-operator causal audit core (IMDA 95/100) |
+| **NOMOS** | [nohn3043-arch/second-perspective](https://github.com/nohn3043-arch/second-perspective) (`Intelligent-Decision-Hub--Nomos` branch) | Auditable deterministic decision hub (IMDA 95/100) |
+| **SPL-G1** | [nohn3043-arch/SPL-G1-General-purpose-processor](https://github.com/nohn3043-arch/SPL-G1-General-purpose-processor) | Hardware causal-audit Trusted Compute Unit (TCU) |
+| **SPL-Virtual-World-Base** | [nohn3043-arch/Second-Reality](https://github.com/nohn3043-arch/Second-Reality) | Virtual-world & metaverse infrastructure (Constitution / Law / Bridge) |
+| **Story-Engine** | [nohn3043-arch/story-engine](https://github.com/nohn3043-arch/story-engine) | Long-form narrative consistency engine |
+| **Antares** | [nohn3043-arch/Antares](https://github.com/nohn3043-arch/Antares) | GFSIP v1.0 — federated stable interoperability protocol with causal audit |
+| **Anthropomorphic-Agent-Engine** | [nohn3043-arch/Anthropomorphic-Agent-Engine](https://github.com/nohn3043-arch/Anthropomorphic-Agent-Engine) | Deterministic anthropomorphic psychology engine (SPL Pure Core V8.0) |
+| **PAGES** | [nohn3043-arch/pages](https://github.com/nohn3043-arch/pages) | Official NOHN AI ecosystem landing page |
+
+<p align="center">— ✦ —</p>
+
+## ✦ License & Authorization
+
+This repository is **not open-source**. It uses a dual-track model: free for individual non-commercial research; paid commercial authorization required for government / enterprise. See [LICENSE](./LICENSE).
+
+- **Apply for authorization**: International / Global — [ai@nohnlins.com](mailto:ai@nohnlins.com) · China — [lin@secondai.top](mailto:lin@secondai.top)
+
 <p align="center">
-  <a href="https://github.com/NOHN-AI">NOHN-AI</a>
+  <a href="https://github.com/nohn3043-arch">GitHub</a>
   &nbsp;·&nbsp;
   <a href="https://www.nohnlins.com/">nohnlins.com</a>
   &nbsp;·&nbsp;
-  <a href="mailto:lin@secondai.top">lin@secondai.top</a>
+  <a href="mailto:ai@nohnlins.com">ai@nohnlins.com</a>
 </p>
 <p align="center"><sub>NOHN AI · ANTARES</sub></p>

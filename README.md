@@ -91,14 +91,14 @@
 ## ✦ 快速开始
 
 ```bash
-# Primary: GitHub
+# 主源：GitHub
 git clone https://github.com/nohn3043-arch/Antares.git
-# Mirror: Gitee
+# 镜像：Gitee（本仓库）
 # git clone https://gitee.com/nohn-ecosystem/Antares.git
 cd Antares/reference-impl
 pip install -r requirements.txt
-python demo.py                # end-to-end demo: handshake → channel → data → dedupe → recovery
-python gfsip/conformance.py   # 9/9 Section-28 minimum conformance vectors — all passing
+python demo.py                # 端到端演示：握手 → 通道 → 数据 → 去重 → 恢复
+python gfsip/conformance.py   # 9/9 第 28 节最小一致性向量——全部通过
 ```
 
 <p align="center">— ✦ —</p>
@@ -136,28 +136,28 @@ python gfsip/conformance.py   # 9/9 Section-28 minimum conformance vectors — a
 
 <p align="center">— ✦ —</p>
 
-## ✦ Ecosystem
+## ✦ 生态
 
-ANTARES is one member of the NOHN AI ecosystem — a family of projects built around second-perspective causal audit and deterministic execution:
+ANTARES 是 NOHN AI 生态的一员——围绕第二视角因果审计与确定性执行构建的项目家族：
 
-| Project | Repository | What it is |
+| 项目 | 仓库 | 定位 |
 |---|---|---|
-| **Second-Perspective (GCAE)** | [nohn3043-arch/second-perspective](https://github.com/nohn3043-arch/second-perspective) | Global cognitive audit engine — the five-operator causal audit core (IMDA 95/100) |
-| **NOMOS** | [nohn3043-arch/second-perspective](https://github.com/nohn3043-arch/second-perspective) (`Intelligent-Decision-Hub--Nomos` branch) | Auditable deterministic decision hub (IMDA 95/100) |
-| **SPL-G1** | [nohn3043-arch/SPL-G1-General-purpose-processor](https://github.com/nohn3043-arch/SPL-G1-General-purpose-processor) | Hardware causal-audit Trusted Compute Unit (TCU) |
-| **SPL-Virtual-World-Base** | [nohn3043-arch/Second-Reality](https://github.com/nohn3043-arch/Second-Reality) | Virtual-world & metaverse infrastructure (Constitution / Law / Bridge) |
-| **Story-Engine** | [nohn3043-arch/story-engine](https://github.com/nohn3043-arch/story-engine) | Long-form narrative consistency engine |
-| **Antares** | [nohn3043-arch/Antares](https://github.com/nohn3043-arch/Antares) | GFSIP v1.0 — federated stable interoperability protocol with causal audit |
-| **Anthropomorphic-Agent-Engine** | [nohn3043-arch/Anthropomorphic-Agent-Engine](https://github.com/nohn3043-arch/Anthropomorphic-Agent-Engine) | Deterministic anthropomorphic psychology engine (SPL Pure Core V8.0) |
-| **PAGES** | [nohn3043-arch/pages](https://github.com/nohn3043-arch/pages) | Official NOHN AI ecosystem landing page |
+| **Second-Perspective (GCAE)** | [nohn3043-arch/second-perspective](https://github.com/nohn3043-arch/second-perspective) | 全局认知审计引擎——五算子因果审计内核（IMDA 95/100） |
+| **NOMOS** | [nohn3043-arch/second-perspective](https://github.com/nohn3043-arch/second-perspective)（`Intelligent-Decision-Hub--Nomos` 分支） | 可审计确定性决策中心（IMDA 95/100） |
+| **SPL-G1** | [nohn3043-arch/SPL-G1](https://github.com/nohn3043-arch/SPL-G1) | 硬件因果审计可信计算单元（TCU） |
+| **SPL-Virtual-World-Base** | [nohn3043-arch/Second-Reality](https://github.com/nohn3043-arch/Second-Reality) | 虚拟世界与元宇宙基础设施（宪法 / 法律 / 桥梁） |
+| **Story-Engine** | [nohn3043-arch/story-engine](https://github.com/nohn3043-arch/story-engine) | 长篇叙事一致性引擎 |
+| **Antares** | [nohn3043-arch/Antares](https://github.com/nohn3043-arch/Antares) | GFSIP v1.0——带因果审计的联邦稳定互操作协议 |
+| **Anthropomorphic-Agent-Engine** | [nohn3043-arch/Anthropomorphic-Agent-Engine](https://github.com/nohn3043-arch/Anthropomorphic-Agent-Engine) | 确定性拟人心理引擎（SPL Pure Core V8.0） |
+| **PAGES** | [nohn3043-arch/pages](https://github.com/nohn3043-arch/pages) | NOHN AI 生态官方落地页 |
 
 <p align="center">— ✦ —</p>
 
-## ✦ License & Authorization
+## ✦ 许可与授权
 
-This repository is **not open-source**. It uses a dual-track model: free for individual non-commercial research; paid commercial authorization required for government / enterprise. See [LICENSE](./LICENSE).
+本仓库**非开源**，采用双轨模式：个人非商业研究免费；政府 / 企业需付费商业授权。详见 [LICENSE](./LICENSE)。
 
-- **Apply for authorization**: International / Global — [ai@nohnlins.com](mailto:ai@nohnlins.com) · China — [lin@secondai.top](mailto:lin@secondai.top)
+- **申请授权**：国际 / 全球 — [ai@nohnlins.com](mailto:ai@nohnlins.com) · 中国 — [lin@secondai.top](mailto:lin@secondai.top)
 
 <p align="center">
   <a href="https://github.com/nohn3043-arch">GitHub</a>

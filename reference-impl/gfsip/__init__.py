@@ -35,6 +35,7 @@ from .federation import (
 )
 from .transport import Link, make_link_pair
 from .endpoint import Endpoint, ProtocolError
+from .async_api import AsyncEndpoint
 
 __all__ = [
     "MessageType", "FrameFlag", "SessionState", "ErrorCode", "ChannelType",
@@ -52,4 +53,5 @@ __all__ = [
     "FederationError",
     "Link", "make_link_pair",
     "Endpoint", "ProtocolError",
+    "AsyncEndpoint",
 ]

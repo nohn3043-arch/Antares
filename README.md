@@ -94,11 +94,12 @@
 # 安装 SDK（PyPI）
 pip install gfsip
 
-# 运行端到端演示（clone 仓库获取 demo.py）
+# 运行端到端演示（clone 仓库获取 demo 文件）
 git clone https://github.com/nohn3043-arch/Antares.git
 cd Antares/reference-impl
 pip install -r requirements.txt
-python demo.py                # 端到端演示：握手 → 通道 → 数据 → 去重 → 恢复
+python demo.py                # 同步 API 演示：握手 → 通道 → 数据 → 去重 → 恢复
+python async_demo.py          # 异步 API 演示：await connect/open_channel/send（零手动 pump）
 python gfsip/conformance.py   # 9/9 第 28 节最小一致性向量——全部通过
 ```
 
@@ -128,6 +129,8 @@ python gfsip/conformance.py   # 9/9 第 28 节最小一致性向量——全部�
   <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">规范 v1.0（接口冻结）</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">✅ 完成</td></tr>
   <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">机器可读状态机与模式</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">✅ 完成</td></tr>
   <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">Python 参考实现（9/9 一致性）</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">✅ 完成</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">PyPI 包发布（pip install gfsip）</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">✅ 完成</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">异步高层 API（AsyncEndpoint，零手动 pump）</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">✅ 完成</td></tr>
   <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">独立第二实现</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">🔲 进行中</td></tr>
   <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">公开互操作报告</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">🔲 待办</td></tr>
   <tr><td style="padding:8px">生产试点域</td><td style="padding:8px">🔲 待办</td></tr>

@@ -96,7 +96,7 @@ async def main():
     sep("5. CAUSAL AUDIT TRAIL  (signed events recorded automatically)")
     print(f"  responder business state : {kv.state}")
     print(f"  audit events recorded    : {responder.audit.count()}")
-    for i, event in enumerate(responder.audit.events, 1):
+    for i, event in enumerate(responder.audit._events.values(), 1):
         print(f"    [{i}] {event.event_type}  rule={event.rule_id}  "
               f"before={event.state_before_hash[:16]}...  after={event.state_after_hash[:16]}...")
     print("  [PASS] signed causal audit chain available")

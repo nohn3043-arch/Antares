@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gfsip"
+version = "1.0.0"
+description = "GFSIP v1.0 — Global Federation Stable Interoperability Protocol (Antares). Encrypted, multi-channel, recoverable cross-domain communication with causal audit and federation routing."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "Proprietary — personal non-commercial research free; government/enterprise commercial license required. See LICENSE."}
+authors = [
+    {name = "NOHN AI", email = "ai@nohnlins.com"}
+]
+keywords = ["gfsip", "antares", "federation", "protocol", "quic", "causal-audit", "agent-network", "distributed-systems", "interoperability"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Science/Research",
+    "License :: Other/Proprietary License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Communications",
+    "Topic :: Internet",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Networking",
+]
+dependencies = [
+    "cbor2>=5.4.0",
+    "cryptography>=42.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/nohn3043-arch/Antares"
+Documentation = "https://github.com/nohn3043-arch/Antares/blob/main/GFSIP_v1.0_protocol_spec.md"
+Repository = "https://github.com/nohn3043-arch/Antares"
+
+[tool.setuptools.packages.find]
+where = ["reference-impl"]
+include = ["gfsip*"]
+
+[tool.setuptools.package-data]
+gfsip = ["py.typed"]

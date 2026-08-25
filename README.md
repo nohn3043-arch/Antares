@@ -91,10 +91,11 @@
 ## ✦ 快速开始
 
 ```bash
-# 主源：GitHub
+# 安装 SDK（PyPI）
+pip install gfsip
+
+# 运行端到端演示（clone 仓库获取 demo.py）
 git clone https://github.com/nohn3043-arch/Antares.git
-# 镜像：Gitee（本仓库）
-# git clone https://gitee.com/nohn-ecosystem/Antares.git
 cd Antares/reference-impl
 pip install -r requirements.txt
 python demo.py                # 端到端演示：握手 → 通道 → 数据 → 去重 → 恢复

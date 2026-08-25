@@ -8,7 +8,7 @@ version = "1.0.0"
 description = "GFSIP v1.0 — Global Federation Stable Interoperability Protocol (Antares). Encrypted, multi-channel, recoverable cross-domain communication with causal audit and federation routing."
 readme = "README.md"
 requires-python = ">=3.9"
-license = {text = "Proprietary — personal non-commercial research free; government/enterprise commercial license required. See LICENSE."}
+license = {text = "CC-BY 4.0 — Creative Commons Attribution 4.0 International. See LICENSE."}
 authors = [
     {name = "NOHN AI", email = "ai@nohnlins.com"}
 ]
@@ -18,7 +18,6 @@ classifiers = [
     "Intended Audience :: Developers",
     "Intended Audience :: Information Technology",
     "Intended Audience :: Science/Research",
-    "License :: Other/Proprietary License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",

@@ -157,11 +157,11 @@ ANTARES 是 NOHN AI 生态的一员——围绕第二视角因果审计与确定
 
 <p align="center">— ✦ —</p>
 
-## ✦ 许可与授权
+## ✦ 许可
 
-本仓库**非开源**，采用双轨模式：个人非商业研究免费；政府 / 企业需付费商业授权。详见 [LICENSE](./LICENSE)。
+本仓库以 [Creative Commons Attribution 4.0 International (CC-BY 4.0)](https://creativecommons.org/licenses/by/4.0/) 许可发布——允许任意使用、修改与分发（含商业用途），仅需署名。详见 [LICENSE](./LICENSE)。
 
-- **申请授权**：国际 / 全球 — [ai@nohnlins.com](mailto:ai@nohnlins.com) · 中国 — [lin@secondai.top](mailto:lin@secondai.top)
+- **联系**：国际 / 全球 — [ai@nohnlins.com](mailto:ai@nohnlins.com) · 中国 — [lin@secondai.top](mailto:lin@secondai.top)
 
 <p align="center">
   <a href="https://github.com/nohn3043-arch">GitHub</a>

@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gfsip"
-version = "1.0.0"
+version = "1.1.0"
 description = "GFSIP v1.0 — Global Federation Stable Interoperability Protocol (Antares). Encrypted, multi-channel, recoverable cross-domain communication with causal audit and federation routing."
 readme = "README.md"
 requires-python = ">=3.9"
-license = {text = "CC-BY 4.0 — Creative Commons Attribution 4.0 International. See LICENSE."}
+license = {text = "Apache-2.0 — Apache License 2.0 (code). Specification and documentation: CC-BY 4.0. See LICENSE and LICENSE-SPEC.md."}
 authors = [
     {name = "NOHN AI", email = "ai@nohnlins.com"}
 ]
@@ -18,6 +18,7 @@ classifiers = [
     "Intended Audience :: Developers",
     "Intended Audience :: Information Technology",
     "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
@@ -33,6 +34,7 @@ classifiers = [
 dependencies = [
     "cbor2>=5.4.0",
     "cryptography>=42.0",
+    "aioquic>=1.0.0",
 ]
 
 [project.urls]

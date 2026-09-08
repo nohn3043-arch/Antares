@@ -159,7 +159,17 @@ ANTARES 是 NOHN AI 生态的一员——围绕第二视角因果审计与确定
 
 ## ✦ 许可
 
-本仓库以 [Creative Commons Attribution 4.0 International (CC-BY 4.0)](https://creativecommons.org/licenses/by/4.0/) 许可发布——允许任意使用、修改与分发（含商业用途），仅需署名。详见 [LICENSE](./LICENSE)。
+本仓库采用**双轨许可**：
+
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+  <tr><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">内容</th><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">许可</th><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">文件</th></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>代码实现</strong>（<code>reference-impl/</code> 下的 Python 包 <code>gfsip</code>）</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><a href="./LICENSE"><code>LICENSE</code></a></td></tr>
+  <tr><td style="padding:8px"><strong>协议规范与文档</strong>（<code>GFSIP_v1.0_protocol_spec.md</code>、<code>gfsip-*.json</code>、<code>gfsip-*.csv</code>、<code>assets/</code> 图示）</td><td style="padding:8px"><a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></td><td style="padding:8px"><a href="./LICENSE-SPEC.md"><code>LICENSE-SPEC.md</code></a></td></tr>
+</table>
+
+Apache-2.0 允许商业使用、修改与分发，并含**明示专利授予**；CC BY 4.0 允许任意使用与再发布（含商业用途），仅需署名——规范的开放署名授权服务于 GFSIP 作为开放标准的传播目标。
+
+> **不可撤销声明**：v1.0 及此前发布的版本曾整体以 CC BY 4.0 发布（含代码）。该授权依其条款不可撤销，相关版本将永久可依 CC BY 4.0 使用。上述双轨安排自下一版本起生效。
 
 - **联系**：国际 / 全球 — [ai@nohnlins.com](mailto:ai@nohnlins.com) · 中国 — [lin@secondai.top](mailto:lin@secondai.top)
 

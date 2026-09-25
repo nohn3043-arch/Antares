@@ -1,12 +1,16 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/gfsip-protocol-D4AF37?style=flat-square" alt="gfsip-protocol">
-  <img src="https://img.shields.io/badge/version-v1.0-D4AF37?style=flat-square" alt="version">
-  <img src="https://img.shields.io/badge/federated-stable-D4AF37?style=flat-square" alt="federated-stable">
-  <img src="https://img.shields.io/badge/audit--native-D4AF37?style=flat-square" alt="audit-native">
+  <img src="assets/banner.svg" alt="ANTARES 横幅" style="width:100%">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/protocol-D4AF37?style=flat-square" alt="protocol">
+  <img src="https://img.shields.io/badge/quic-D4AF37?style=flat-square" alt="quic">
+  <img src="https://img.shields.io/badge/federation-D4AF37?style=flat-square" alt="federation">
+  <img src="https://img.shields.io/badge/gfsip-v1.0-D4AF37?style=flat-square" alt="gfsip-v1.0">
 </p>
 
 <blockquote align="center">
-  <em>GFSIP v1.0 —— 带因果审计的联邦稳定互操作协议</em>
+  <em>全局联邦稳定互操作协议 GFSIP v1.0</em>
 </blockquote>
 
 <p align="center">
@@ -17,168 +21,167 @@
 
 ## ✦ 关于
 
-<p style="font-size:15px;line-height:1.8;color:#2C2C2C">
-<strong>安塔瑞斯（Antares）</strong>——全球联邦稳定互操作协议（Global Federated Stable Interoperability Protocol，GFSIP）v1.0。
-</p>
+<p style="font-size:15px;line-height:1.8;color:#2C2C2C">ANTARES 即 GFSIP v1.0 —— 全局联邦稳定互操作协议。它为服务、AI 智能体、设备与组织提供加密、多路复用、可恢复的跨域通信，且无需中心权威。以 QUIC 为强制传输层，配合确定性 CBOR 序列化，内置会话恢复、幂等去重与因果审计，是去中心化网络的稳定基石。</p>
 
-<p style="font-size:15px;line-height:1.8;color:#2C2C2C">
-GFSIP 是一种面向数字资产、身份与服务的联邦互操作协议，核心由三层构成：价值协议层（<code>GFSIP-VAL</code>，稳定锚定 + 储备证明）、身份协议层（<code>GFSIP-ID</code>，去中心化身份 + 可验证凭证）、服务协议层（<code>GFSIP-SVC</code>，服务发现与跨域调用）。它以 <strong>储备证明</strong> 为价值锚点，以 <strong>去中心化身份</strong> 为信任根，以 <strong>因果审计</strong> 为合规骨架，构建一个可审计、可验证、可互操作的全球联邦网络。
-</p>
-
-<p style="font-size:15px;line-height:1.8;color:#2C2C2C">
-协议原生集成 <strong>因果审计</strong>——每一次跨域操作都可追溯、可验证、可追责。它不仅仅是技术协议，更是一套治理框架：治理委员会、技术委员会、审计委员会三权分立，确保协议演进的透明与可信。
+<p align="center">
+  <img src="assets/overview.svg" alt="ANTARES 概览" style="width:100%">
 </p>
 
 </div>
 
 <p align="center">— ✦ —</p>
 
-## ✦ 核心思想
+## ✦ 核心能力
 
 <div style="max-width:880px;margin:0 auto;padding:0 16px">
 
-- **联邦而非联盟** —— 不设中心机构，各参与方平等自治，通过协议达成共识。
-- **稳定而非波动** —— 价值锚定于真实储备，通过储备证明与公开审计确保可信度。
-- **互操作而非孤岛** —— 身份、资产、服务在联邦内自由流动，无需各系统两两对接。
-- **可审计而非黑盒** —— 因果审计内生于协议，每一步都可追溯、可验证、可追责。
-- **隐私优先而非事后补救** —— 最小披露、零知识证明、选择性披露，隐私从设计上即内建。
-- **治理而非人治** —— 三权分立的治理结构，协议变更需多方参与、公开透明。
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+  <tr><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">#</th><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">能力</th><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">说明</th></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">1</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>加密会话</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">基于 QUIC 的相互认证 TLS 或令牌认证会话</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">2</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>多路复用</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">单一会话内的独立逻辑通道</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">3</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>会话恢复</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">网络切换后无需重新认证即可恢复会话</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">4</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>幂等副作用</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">基于幂等键的窗口化去重</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">5</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>因果审计（可选）</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">带已声明因果前驱的签名事件记录</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">6</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>跨域联邦</strong></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">多信任锚路由 + 签名域描述符</td></tr>
+  <tr><td style="padding:8px">7</td><td style="padding:8px"><strong>故障隔离</strong></td><td style="padding:8px">单一域故障不会阻塞域内流量</td></tr>
+</table>
 
 </div>
 
 <p align="center">— ✦ —</p>
 
-## ✦ 协议架构
+## ✦ 线格式
 
-```
-┌─────────────────────────────────────────────────────┐
-│                   治理层（Governance）                │
-│    治理委员会  ·  技术委员会  ·  审计委员会            │
-├─────────────────────────────────────────────────────┤
-│                   服务协议层（GFSIP-SVC）             │
-│    服务注册 / 发现  ·  跨域调用  ·  计费与结算         │
-├─────────────────────────────────────────────────────┤
-│                   身份协议层（GFSIP-ID）              │
-│    DID  ·  可验证凭证  ·  身份钱包  ·  信任根          │
-├─────────────────────────────────────────────────────┤
-│                   价值协议层（GFSIP-VAL）             │
-│    稳定资产  ·  储备证明  ·  原子交换  ·  跨链桥接      │
-├─────────────────────────────────────────────────────┤
-│                   因果审计层（Causal Audit）          │
-│    叙事剥离  ·  假设透视  ·  脆弱性锁存  ·  状态锚定    │
-├─────────────────────────────────────────────────────┤
-│                   传输与密码学层                       │
-│    mTLS / QUIC  ·  签名  ·  加密  ·  ZKP              │
-└─────────────────────────────────────────────────────┘
-```
+<div style="max-width:880px;margin:0 auto;padding:0 16px">
+
+<p style="font-size:15px;line-height:1.8;color:#2C2C2C">GFSIP 在 QUIC 之上使用 <strong>44 字节定长报头</strong>，ALPN 为 <code style="background:#F5F0E6;padding:2px 6px;border-radius:3px;color:#C9A96E">gfsip/1</code>。扩展头使用确定性 CBOR（大端、最短编码）。18 种标准消息类型（<code>0x01</code>–<code>0x16</code>）覆盖完整生命周期：握手、通道管理、数据传输、会话恢复、审计事件与联邦路由。</p>
+
+</div>
 
 <p align="center">— ✦ —</p>
 
-## ✦ 规范文档
+## ✦ 仓库内容
 
-所有正式规范位于 [`specs/`](specs/) 目录：
+<div style="max-width:880px;margin:0 auto;padding:0 16px">
 
-| 编号 | 名称 | 说明 |
-|---|---|---|
-| GFSIP-CORE-001 | `core-terminology.md` | 核心术语与定义 |
-| GFSIP-CORE-002 | `core-architecture.md` | 总体架构与设计原则 |
-| GFSIP-VAL-001 | `val-stable-asset.md` | 稳定资产规范 |
-| GFSIP-VAL-002 | `val-reserve-proof.md` | 储备证明机制 |
-| GFSIP-VAL-003 | `val-atomic-swap.md` | 原子交换协议 |
-| GFSIP-VAL-004 | `val-cross-chain-bridge.md` | 跨链桥接规范 |
-| GFSIP-ID-001 | `id-did-method.md` | DID 方法规范 |
-| GFSIP-ID-002 | `id-verifiable-credential.md` | 可验证凭证规范 |
-| GFSIP-ID-003 | `id-trust-root.md` | 信任根与治理 |
-| GFSIP-SVC-001 | `svc-discovery.md` | 服务发现协议 |
-| GFSIP-SVC-002 | `svc-cross-domain-call.md` | 跨域服务调用 |
-| GFSIP-SVC-003 | `svc-billing-settlement.md` | 计费与结算 |
-| GFSIP-AUD-001 | `aud-causal-audit.md` | 因果审计规范 |
-| GFSIP-AUD-002 | `aud-proof-of-reserve.md` | 储备审计流程 |
-| GFSIP-GOV-001 | `gov-structure.md` | 治理结构 |
-| GFSIP-GOV-002 | `gov-proposal-process.md` | 提案与表决流程 |
-| GFSIP-SEC-001 | `sec-cryptography-primitives.md` | 密码学原语与算法 |
-| GFSIP-SEC-002 | `sec-threat-model.md` | 威胁模型与安全边界 |
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+  <tr><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">文件</th><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">用途</th></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>GFSIP_v1.0_protocol_spec.md</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">完整协议规范（33 节）</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>gfsip-state-machine.json</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">机器可读的状态机定义</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>gfsip-message-schema.json</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">逻辑消息 JSON Schema</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>gfsip-error-registry.json</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">数值错误码登记表</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>gfsip-conformance-checklist.csv</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">一致性测试清单</td></tr>
+  <tr><td style="padding:8px"><code>reference-impl/</code></td><td style="padding:8px">Python 参考实现 —— 帧编解码、状态机、通道管理、认证、去重、恢复、审计、联邦、端到端演示（9/9 一致性向量通过）</td></tr>
+</table>
+
+</div>
 
 <p align="center">— ✦ —</p>
 
-## ✦ 参考实现
+## ✦ 协议档位
 
-`ref-impl/` 目录包含 v1.0 规范的参考实现（Python，仅作学习与验证，非生产级）：
+<div style="max-width:880px;margin:0 auto;padding:0 16px">
 
-| 文件 | 说明 |
-|---|---|
-| `ref_impl/stable_asset.py` | 稳定资产发行 / 赎回 / 转账 + 储备金校验 |
-| `ref_impl/reserve_proof.py` | 默克尔树储备证明生成与验证（含负债证明） |
-| `ref_impl/did_gfsip.py` | `did:gfsip:` 方法的 DID 文档生成 / 解析 / 密钥轮换 |
-| `ref_impl/vc.py` | 可验证凭证签发 / 验证 + 选择性披露（JSON-LD + 默克尔证明） |
-| `ref_impl/atomic_swap.py` | HTLC 哈希时间锁原子交换（发起 / 接受 / 完成 / 回退） |
-| `ref_impl/cross_chain_bridge.py` | 联邦门限签名跨链桥（锁定 / 铸造 / 燃烧 / 释放） |
-| `ref_impl/service_discovery.py` | 联邦服务注册表（注册 / 发现 / 健康检查 + 签名验证） |
-| `ref_impl/cross_domain_call.py` | 跨域服务调用（请求签名 / 响应验证 / 幂等 / 审计） |
-| `ref_impl/billing_settlement.py` | 计费与结算（计量 / 对账 / 结算 / 争议处理） |
-| `ref_impl/causal_audit.py` | 因果审计日志（叙事剥离 / 假设透视 / 脆弱性锁存 / 状态锚定） |
-| `ref_impl/crypto_utils.py` | 密码学工具（Ed25519 / SHA-256 / 默克尔树） |
-| `ref_impl/governance.py` | 治理委员会（提案 / 表决 / 执行 + 法定人数） |
-| `ref_impl/demo.py` | 端到端演示：价值发行 → 身份凭证 → 服务发现 → 跨域调用 → 审计 |
+<p style="font-size:15px;line-height:1.8;color:#2C2C2C"><strong style="color:#C9A96E">Core/1（强制）</strong> —— QUIC 传输、版本协商、相互认证、会话与通道管理、会话恢复、结构化错误、优雅关闭。</p>
 
-### 运行演示
+<p style="font-size:15px;line-height:1.8;color:#2C2C2C"><strong style="color:#C9A96E">Audit/1（可选）</strong> —— 带已声明因果前驱、行为者身份、规则版本与前/后状态哈希的签名因果事件记录；拒绝自环与已知环。</p>
+
+<p style="font-size:15px;line-height:1.8;color:#2C2C2C"><strong style="color:#C9A96E">Federation/1（可选）</strong> —— 通过签名的 <code>DomainDescriptor</code> 对象进行跨域路由、多信任锚配置、描述符过期/撤销与故障隔离。</p>
+
+</div>
+
+<p align="center">— ✦ —</p>
+
+## ✦ 快速开始
 
 ```bash
-cd ref_impl
-pip install pynacl     # 可选：Ed25519 签名加速（未安装时自动回退到 Python 内建）
-python demo.py
-```
+# 安装 SDK（PyPI）
+pip install gfsip
 
-演示流程：GFSIP 储备金初始化 → 稳定资产发行 → DID 创建 → 可验证凭证签发 → 服务注册与发现 → 跨域服务调用 → 因果审计链验证 → 原子交换 → 治理提案。
+# 运行端到端演示（克隆仓库以获取演示文件）
+git clone https://github.com/nohn3043-arch/Antares.git
+cd Antares/reference-impl
+pip install -r requirements.txt
+python demo.py                # 同步 API 演示：握手 -> 通道 -> 数据 -> 去重 -> 恢复
+python async_demo.py          # 异步 API 演示：await connect/open_channel/send（零手动泵）
+python gfsip/conformance.py   # 9/9 第 28 节最小一致性向量 —— 全部通过
+```
 
 <p align="center">— ✦ —</p>
 
-## ✦ 状态
+## ✦ 应用场景
 
-- **v1.0** —— 协议规范定稿，参考实现完成。
-- 治理结构与审计流程已定义。
-- 密码学原语与威胁模型文档已发布。
-- 储备证明机制（默克尔树）在参考实现中验证通过。
+<div style="max-width:880px;margin:0 auto;padding:0 16px">
+
+- **AI 智能体网络** —— 跨组织边界的多智能体任务协作，带可审计轨迹
+- **企业集成** —— 无需中心权威的跨组织工作流编排
+- **IoT / 边缘** —— 网络切换下的设备到云会话恢复
+- **金融 / 合规** —— 用于监管报送的签名因果审计链
+- **医疗健康** —— 带域级策略强制的联邦数据交换
+- **机器人** —— 用于幂等安全操作的可靠指令通道
+
+</div>
+
+<p align="center">— ✦ —</p>
+
+## ✦ 项目状态
+
+<div style="max-width:880px;margin:0 auto;padding:0 16px">
+
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+  <tr><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">里程碑</th><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">状态</th></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">规范 v1.0（接口冻结）</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">✅ 完成</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">机器可读状态机与 schema</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">✅ 完成</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">Python 参考实现（9/9 一致性）</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">✅ 完成</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">PyPI 包发布（pip install gfsip）</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">✅ 完成</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">异步高层 API（AsyncEndpoint，零手动泵）</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">✅ 完成</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">独立第二实现</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">🔲 进行中</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9">公开互操作性报告</td><td style="padding:8px;border-bottom:1px solid #F0EAD9">🔲 待办</td></tr>
+  <tr><td style="padding:8px">生产试点域</td><td style="padding:8px">🔲 待办</td></tr>
+</table>
+
+</div>
 
 <p align="center">— ✦ —</p>
 
 ## ✦ 生态
 
-Antares 是 NOHN AI 生态的一员 —— 围绕第二视角因果审计与确定性执行构建的项目家族：
+ANTARES 是 NOHN AI 生态的一员 —— 一个围绕第二视角因果审计与确定性执行构建的项目家族：
 
-| 项目 | 仓库 | 定位 |
+| 项目 | 仓库 | 角色 |
 |---|---|---|
-| **Second-Perspective (GCAE)** | [nohn3043-arch/second-perspective](https://github.com/nohn3043-arch/second-perspective) | 全球认知审计引擎 —— 五算子因果审计核心（IMDA 95/100） |
-| **NOMOS** | [nohn3043-arch/second-perspective](https://github.com/nohn3043-arch/second-perspective)（`Intelligent-Decision-Hub--Nomos` 分支） | 可审计确定性决策中心（IMDA 95/100） |
+| **Second-Perspective (GCAE)** | [nohn3043-arch/second-perspective](https://github.com/nohn3043-arch/second-perspective) | 全局认知审计引擎 —— 五算子因果审计内核（IMDA 95/100） |
+| **NOMOS** | [nohn3043-arch/second-perspective](https://github.com/nohn3043-arch/second-perspective)（`Intelligent-Decision-Hub--Nomos` 分支） | 可审计的确定性决策中枢（IMDA 95/100） |
 | **SPL-G1** | [nohn3043-arch/SPL-G1](https://github.com/nohn3043-arch/SPL-G1) | 硬件因果审计可信计算单元（TCU） |
-| **SPL-Virtual-World-Base** | [nohn3043-arch/Second-Reality](https://github.com/nohn3043-arch/Second-Reality) | 虚拟世界与元宇宙基础设施（宪法 / 法律 / 桥梁） |
+| **SPL-Virtual-World-Base** | [nohn3043-arch/Second-Reality](https://github.com/nohn3043-arch/Second-Reality) | 虚拟世界与元宇宙基础设施（宪法 / 法律 / 桥） |
 | **Story-Engine** | [nohn3043-arch/story-engine](https://github.com/nohn3043-arch/story-engine) | 长篇叙事一致性引擎 |
 | **Antares** | [nohn3043-arch/Antares](https://github.com/nohn3043-arch/Antares) | GFSIP v1.0 —— 带因果审计的联邦稳定互操作协议 |
-| **Anthropomorphic-Agent-Engine** | [nohn3043-arch/Anthropomorphic-Agent-Engine](https://github.com/nohn3043-arch/Anthropomorphic-Agent-Engine) | 确定性拟人心理学引擎（SPL Pure Core V8.0） |
+| **Anthropomorphic-Agent-Engine** | [nohn3043-arch/Anthropomorphic-Agent-Engine](https://github.com/nohn3043-arch/Anthropomorphic-Agent-Engine) | 确定性拟人心理引擎（SPL Pure Core V8.0） |
 | **PAGES** | [nohn3043-arch/pages](https://github.com/nohn3043-arch/pages) | NOHN AI 生态官方落地页 |
 
 <p align="center">— ✦ —</p>
 
-## ✦ 许可与授权
+## ✦ 许可
 
-本仓库 **不是开源软件**。双轨模式：个人非商业研究免费；政府 / 企业使用需付费商业许可。详见 [LICENSE](./LICENSE)。
+本仓库采用<strong>双轨许可</strong>：
 
-| 用户 | 用途 | 许可要求 |
-|---|---|---|
-| 个人（自然人） | 非商业学术研究 / 学习 / 个人实验 | **免费**，依据 [LICENSE](./LICENSE) 中「个人免费研究许可」 |
-| 政府机构 / 事业单位 / 企业 | 任何用途（含内部部署、产品开发、服务提供） | **必须事先签署付费商业许可** |
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+  <tr><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">内容</th><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">许可</th><th style="text-align:left;color:#C9A96E;padding:8px;border-bottom:1px solid #E5DCC4">文件</th></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><strong>代码实现</strong>（<code>reference-impl/</code> 下的 Python 包 <code>gfsip</code>）</td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></td><td style="padding:8px;border-bottom:1px solid #F0EAD9"><a href="./LICENSE"><code>LICENSE</code></a></td></tr>
+  <tr><td style="padding:8px"><strong>协议规范与文档</strong>（<code>GFSIP_v1.0_protocol_spec.md</code>、<code>gfsip-*.json</code>、<code>gfsip-*.csv</code>、<code>assets/</code> 图示）</td><td style="padding:8px"><a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></td><td style="padding:8px"><a href="./LICENSE-SPEC.md"><code>LICENSE-SPEC.md</code></a></td></tr>
+</table>
 
-- **个人研究者** 可免费用于非商业研究，但不得用于任何商业目的，也不得向任何企业或政府机构提供服务。
-- **政府 / 企业用户** 在签署商业许可协议并支付约定费用前，不得复制、部署、运行、集成或分发本作品。
-- **许可申请**：国际 / 全球 — [ai@nohnlins.com](mailto:ai@nohnlins.com) · 中国 — [lin@secondai.top](mailto:lin@secondai.top)
+Apache-2.0 允许商业使用、修改与分发，并含<strong>明示专利授权</strong>；CC BY 4.0 允许在仅署名条件下的任何使用与再分发（含商业使用）—— 为规范采用这种开放的署名许可，服务于 GFSIP 作为开放标准的传播目标。
 
-许可方、适用法律与争议解决依用户所在地按 [LICENSE](./LICENSE) 执行：中国境内 → 上海林明钧华科技有限公司（适用中国法律）；中国境外 → NOHN AI TECHNOLOGY PTE. LTD.（适用新加坡法律，SIAC 仲裁）。
+> **不可撤销声明**：截至 v1.0（含）的版本此前已整体以 CC BY 4.0 发布（含代码）。该许可依其条款不可撤销，这些版本将永久可依 CC BY 4.0 使用。上述双轨安排自下一版本起生效。
+
+- **联系**：国际 / 全球 —— [ai@nohnlins.com](mailto:ai@nohnlins.com) · 中国 —— [lin@secondai.top](mailto:lin@secondai.top)
 
 <p align="center">
-  <a href="https://github.com/nohn3043-arch">GitHub</a>
+  <a href="https://github.com/nohn3043">GitHub</a>
   &nbsp;·&nbsp;
   <a href="https://www.nohnlins.com/">nohnlins.com</a>
   &nbsp;·&nbsp;
   <a href="mailto:ai@nohnlins.com">ai@nohnlins.com</a>
 </p>
-<p align="center"><sub>NOHN AI · ANTARES · GFSIP v1.0</sub></p>
+<p align="center"><sub>NOHN AI · ANTARES</sub></p>

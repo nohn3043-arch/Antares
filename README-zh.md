@@ -31,6 +31,49 @@
 
 <p align="center">— ✦ —</p>
 
+## ✦ 系统架构（人话版）
+
+> **一句话：** ANTARES 让你的服务、AI 智能体或设备能安全地和任何人通信——跨机构也行，而且**中间不需要一台中心服务器**。
+
+```mermaid
+flowchart TB
+    U["👤 你的服务 · AI 智能体 · 设备"]
+
+    subgraph STACK["ANTARES / GFSIP v1.0 —— 协议栈"]
+        T["🚚 传输层 · 管道<br/>QUIC + TLS 1.3 · 44 字节定长头 · CBOR 编码"]
+        S["🔌 会话层 · 一条连接多条车道<br/>相互独立的逻辑通道"]
+        R["🔁 恢复层 · 换网也不断<br/>不用重新登录，接着用"]
+        I["🔒 去重层 · 只执行一次<br/>靠幂等键在时间窗内去重"]
+        A["📒 审计层 · 篡改可发现<br/>签名因果事件 · 拒绝自环与环路"]
+        F["🌐 联邦层 · 跨机构路由<br/>签名域描述符 · 多信任锚"]
+    end
+
+    OUT["✅ 跨域通信：<br/>加密、可续传、可审计"]
+
+    U --> T
+    T --> S
+    S --> R
+    R --> I
+    I --> A
+    A --> F
+    F --> OUT
+
+    classDef cIn fill:#E8F0FE,stroke:#4285F4,stroke-width:1px,color:#173A66
+    classDef cCore fill:#FFF8E1,stroke:#C9A96E,stroke-width:1px,color:#5B4614
+    classDef cOut fill:#E6F4EA,stroke:#34A853,stroke-width:1px,color:#14512B
+    class U cIn
+    class T,S,R,I,A,F cCore
+    class OUT cOut
+```
+
+**这张图怎么看**
+
+1. 这是一座**协议栈**，从下往上读：传输管道承载会话，会话能扛住网络切换，之后才是去重、审计、联邦。
+2. 每一层都对着一个**你已经遇到过的痛点**：连接老掉、重复扣款、「这条记录是谁改的？」、「两家机构怎么在没有中间人的情况下对话？」。
+3. 审计层和联邦层是**可选档位**——如果你只需要一条可靠的管道，用 Core/1 就够了。
+
+📖 每个术语都用一句人话解释 → [术语表 GLOSSARY](./GLOSSARY.md)
+
 ## ✦ 核心能力
 
 <div style="max-width:880px;margin:0 auto;padding:0 16px">

@@ -31,6 +31,49 @@
 
 <p align="center">— ✦ —</p>
 
+## ✦ Architecture (Plain Language)
+
+> **In one sentence:** ANTARES lets your service, AI agent or device talk to anyone else — safely, across organizations, **with no central server in the middle**.
+
+```mermaid
+flowchart TB
+    U["👤 Your service · AI agent · device"]
+
+    subgraph STACK["ANTARES / GFSIP v1.0 — protocol stack"]
+        T["🚚 Transport — the pipe<br/>QUIC + TLS 1.3 · 44-byte fixed header · CBOR"]
+        S["🔌 Session — many lanes, one connection<br/>independent logical channels"]
+        R["🔁 Recovery — survive a network switch<br/>resume without re-authenticating"]
+        I["🔒 Idempotency — do it exactly once<br/>windowed dedup via idempotency keys"]
+        A["📒 Audit — tamper-evident history<br/>signed causal events · rejects self-loops and cycles"]
+        F["🌐 Federation — cross-organization routing<br/>signed domain descriptors · multi trust anchor"]
+    end
+
+    OUT["✅ Cross-domain communication<br/>that is encrypted, resumable and auditable"]
+
+    U --> T
+    T --> S
+    S --> R
+    R --> I
+    I --> A
+    A --> F
+    F --> OUT
+
+    classDef cIn fill:#E8F0FE,stroke:#4285F4,stroke-width:1px,color:#173A66
+    classDef cCore fill:#FFF8E1,stroke:#C9A96E,stroke-width:1px,color:#5B4614
+    classDef cOut fill:#E6F4EA,stroke:#34A853,stroke-width:1px,color:#14512B
+    class U cIn
+    class T,S,R,I,A,F cCore
+    class OUT cOut
+```
+
+**How to read it**
+
+1. It is a **stack** — read it bottom-up: the transport pipe carries sessions, sessions survive network changes, and only then do dedup, audit and federation sit on top.
+2. Every layer solves a **pain you already have**: dropped connections, duplicate payments, "who changed this?", "how do two organizations talk without a middleman?".
+3. Audit and Federation are **optional profiles** — use plain Core/1 if you just need the reliable pipe.
+
+📖 Every term explained in one plain sentence → [Glossary](./GLOSSARY.md)
+
 ## ✦ Core Capabilities
 
 <div style="max-width:880px;margin:0 auto;padding:0 16px">

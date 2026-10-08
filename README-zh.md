@@ -71,6 +71,7 @@
   <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>gfsip-message-schema.json</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">逻辑消息 JSON Schema</td></tr>
   <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>gfsip-error-registry.json</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">数值错误码登记表</td></tr>
   <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>gfsip-conformance-checklist.csv</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">一致性测试清单</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code><a href="./CONFORMANCE-zh.md">CONFORMANCE-zh.md</a></code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">一致性测试指南 —— 从规范性工件自行推导测试用例（面向第三方评估方）</td></tr>
   <tr><td style="padding:8px"><code>reference-impl/</code></td><td style="padding:8px">Python 参考实现 —— 帧编解码、状态机、通道管理、认证、去重、恢复、审计、联邦、端到端演示（9/9 一致性向量通过）</td></tr>
 </table>
 
@@ -104,7 +105,7 @@ cd Antares/reference-impl
 pip install -r requirements.txt
 python demo.py                # 同步 API 演示：握手 -> 通道 -> 数据 -> 去重 -> 恢复
 python async_demo.py          # 异步 API 演示：await connect/open_channel/send（零手动泵）
-python gfsip/conformance.py   # 9/9 第 28 节最小一致性向量 —— 全部通过
+python -m gfsip.conformance   # 9/9 第 28 节最小向量 —— 作者自测，详见 CONFORMANCE-zh.md
 ```
 
 <p align="center">— ✦ —</p>

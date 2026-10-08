@@ -71,6 +71,7 @@
   <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>gfsip-message-schema.json</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Logical message JSON Schema</td></tr>
   <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>gfsip-error-registry.json</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Numeric error code registry</td></tr>
   <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code>gfsip-conformance-checklist.csv</code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Conformance test checklist</td></tr>
+  <tr><td style="padding:8px;border-bottom:1px solid #F0EAD9"><code><a href="./CONFORMANCE.md">CONFORMANCE.md</a></code></td><td style="padding:8px;border-bottom:1px solid #F0EAD9">Conformance testing guide — how to derive your own test cases from the normative artifacts (for third-party evaluators)</td></tr>
   <tr><td style="padding:8px"><code>reference-impl/</code></td><td style="padding:8px">Python reference implementation — frame codec, state machine, channel management, authentication, deduplication, resumption, audit, federation, end-to-end demo (9/9 conformance vectors passing)</td></tr>
 </table>
 
@@ -104,7 +105,7 @@ cd Antares/reference-impl
 pip install -r requirements.txt
 python demo.py                # Sync API demo: handshake -> channel -> data -> dedup -> resume
 python async_demo.py          # Async API demo: await connect/open_channel/send (zero manual pump)
-python gfsip/conformance.py   # 9/9 Section 28 minimal conformance vectors — all passing
+python -m gfsip.conformance   # 9/9 Section 28 minimum vectors — author self-test, see CONFORMANCE.md
 ```
 
 <p align="center">— ✦ —</p>

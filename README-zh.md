@@ -37,40 +37,54 @@
 
 ```mermaid
 flowchart TB
-    U["👤 你的服务 · AI 智能体 · 设备"]
+    UP["👤 你的服务 · AI 智能体 · 设备（调用方）<br/>业务请求：支付 · 消息 · 数据同步"]
 
-    subgraph STACK["ANTARES / GFSIP v1.0 —— 协议栈"]
-        T["🚚 传输层 · 管道<br/>QUIC + TLS 1.3 · 44 字节定长头 · CBOR 编码"]
-        S["🔌 会话层 · 一条连接多条车道<br/>相互独立的逻辑通道"]
-        R["🔁 恢复层 · 换网也不断<br/>不用重新登录，接着用"]
-        I["🔒 去重层 · 只执行一次<br/>靠幂等键在时间窗内去重"]
-        A["📒 审计层 · 篡改可发现<br/>签名因果事件 · 拒绝自环与环路"]
-        F["🌐 联邦层 · 跨机构路由<br/>签名域描述符 · 多信任锚"]
-    end
+    A1["🚪 reference-impl/gfsip/endpoint.py · transport.py<br/>建立 QUIC 连接，进入 GFSIP 会话"]
+    A2["🤝 auth.py · frame.py<br/>互认证 + 版本协商：44 字节定长头 · ALPN gfsip/1"]
+    A3["📜 GFSIP_v1.0_protocol_spec.md · gfsip-state-machine.json<br/>协议规格 + 状态机：约束合法状态与迁移"]
+    A4["🔌 channel.py<br/>开通道：一条会话内多路复用，开多条逻辑通道"]
+    A5["🧬 cbor_utils.py<br/>传数据：CBOR 确定性编码，逐帧发送"]
+    A6["🔁 dedupe.py<br/>幂等去重：幂等键 + 窗口去重，重复请求只执行一次"]
+    A7["🔄 resume.py<br/>断网恢复：网络切换后免重认证续传"]
+    A8["📒 audit.py · signing.py<br/>因果审计：签名事件 + 声明因果前驱，拒绝自环与环路"]
+    A9["🌐 federation.py<br/>跨域路由：签名 DomainDescriptor + 多信任锚 + 故障隔离"]
+    A10["⚠️ gfsip-error-registry.json · gfsip-message-schema.json<br/>错误码注册表 + 消息模式：异常统一编号"]
+    A11["✅ gfsip-conformance-checklist.csv · CONFORMANCE.md<br/>一致性检查清单与判定标准"]
 
-    OUT["✅ 跨域通信：<br/>加密、可续传、可审计"]
+    OUT["📦 跨域会话达成<br/>加密 · 可续传 · 可审计 · 可幂等"]
+    HUMAN["✍️ 人工签署一致性结论<br/>最终结论留在算法之外"]
 
-    U --> T
-    T --> S
-    S --> R
-    R --> I
-    I --> A
-    A --> F
-    F --> OUT
+    UP --> A1
+    A1 --> A2
+    A2 --> A3
+    A3 --> A4
+    A4 --> A5
+    A5 --> A6
+    A6 --> A7
+    A7 --> A8
+    A8 --> A9
+    A9 --> A10
+    A10 --> A11
+    A11 --> OUT
+    OUT --> HUMAN
 
+    classDef cUp fill:#F5F5F5,stroke:#9E9E9E,stroke-width:1px,color:#424242
     classDef cIn fill:#E8F0FE,stroke:#4285F4,stroke-width:1px,color:#173A66
     classDef cCore fill:#FFF8E1,stroke:#C9A96E,stroke-width:1px,color:#5B4614
+    classDef cSide fill:#F3E8FD,stroke:#8E44AD,stroke-width:1px,color:#4A235A
     classDef cOut fill:#E6F4EA,stroke:#34A853,stroke-width:1px,color:#14512B
-    class U cIn
-    class T,S,R,I,A,F cCore
-    class OUT cOut
+    class UP cUp
+    class A1 cIn
+    class A2,A4,A5,A6,A7,A9 cCore
+    class A3,A8,A10,A11 cSide
+    class OUT,HUMAN cOut
 ```
 
 **这张图怎么看**
 
-1. 这是一座**协议栈**，从下往上读：传输管道承载会话，会话能扛住网络切换，之后才是去重、审计、联邦。
-2. 每一层都对着一个**你已经遇到过的痛点**：连接老掉、重复扣款、「这条记录是谁改的？」、「两家机构怎么在没有中间人的情况下对话？」。
-3. 审计层和联邦层是**可选档位**——如果你只需要一条可靠的管道，用 Core/1 就够了。
+1. 从上往下读是**一次会话的时序**：建立连接 → 认证 → 开通道 → 传数据 → 去重 → 断网恢复 → 审计 → 跨域路由；顶部进请求，底部出一次已签名的跨域会话。
+2. 每个框都写了 `reference-impl/gfsip/` 里**真实可点开的实现文件**，以及对应的规格件，可逐步对着源码看。
+3. 最关键的边界：**没有中心机构**——审计与联邦只是可选的 **Core / Audit / Federation** 档位，不是必选层。
 
 📖 每个术语都用一句人话解释 → [术语表 GLOSSARY](./GLOSSARY.md)
 

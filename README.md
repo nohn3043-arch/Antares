@@ -37,40 +37,54 @@
 
 ```mermaid
 flowchart TB
-    U["👤 Your service · AI agent · device"]
+    UP["👤 Your service · AI agent · device (caller)<br/>business request: payment · message · data sync"]
 
-    subgraph STACK["ANTARES / GFSIP v1.0 — protocol stack"]
-        T["🚚 Transport — the pipe<br/>QUIC + TLS 1.3 · 44-byte fixed header · CBOR"]
-        S["🔌 Session — many lanes, one connection<br/>independent logical channels"]
-        R["🔁 Recovery — survive a network switch<br/>resume without re-authenticating"]
-        I["🔒 Idempotency — do it exactly once<br/>windowed dedup via idempotency keys"]
-        A["📒 Audit — tamper-evident history<br/>signed causal events · rejects self-loops and cycles"]
-        F["🌐 Federation — cross-organization routing<br/>signed domain descriptors · multi trust anchor"]
-    end
+    A1["🚪 reference-impl/gfsip/endpoint.py · transport.py<br/>open the QUIC connection, enter the GFSIP session"]
+    A2["🤝 auth.py · frame.py<br/>mutual auth + version negotiation: 44-byte fixed header · ALPN gfsip/1"]
+    A3["📜 GFSIP_v1.0_protocol_spec.md · gfsip-state-machine.json<br/>spec + state machine: legal states and transitions"]
+    A4["🔌 channel.py<br/>open lanes: multiplex many channels over one session"]
+    A5["🧬 cbor_utils.py<br/>send data: deterministic CBOR encoding, frame by frame"]
+    A6["🔁 dedupe.py<br/>idempotent dedupe: idempotency keys + windowed dedup, run exactly once"]
+    A7["🔄 resume.py<br/>survive a network switch: resume without re-authenticating"]
+    A8["📒 audit.py · signing.py<br/>causal audit: signed events + declared causal parents, reject self-loops and cycles"]
+    A9["🌐 federation.py<br/>cross-domain routing: signed DomainDescriptor + multi trust anchor + fault isolation"]
+    A10["⚠️ gfsip-error-registry.json · gfsip-message-schema.json<br/>error-code registry + message schema, uniform error numbering"]
+    A11["✅ gfsip-conformance-checklist.csv · CONFORMANCE.md<br/>conformance checklist and pass / fail criteria"]
 
-    OUT["✅ Cross-domain communication<br/>that is encrypted, resumable and auditable"]
+    OUT["📦 Cross-domain session achieved<br/>encrypted · resumable · auditable · idempotent"]
+    HUMAN["✍️ Human sign-off on the conformance result<br/>the final call stays outside the algorithm"]
 
-    U --> T
-    T --> S
-    S --> R
-    R --> I
-    I --> A
-    A --> F
-    F --> OUT
+    UP --> A1
+    A1 --> A2
+    A2 --> A3
+    A3 --> A4
+    A4 --> A5
+    A5 --> A6
+    A6 --> A7
+    A7 --> A8
+    A8 --> A9
+    A9 --> A10
+    A10 --> A11
+    A11 --> OUT
+    OUT --> HUMAN
 
+    classDef cUp fill:#F5F5F5,stroke:#9E9E9E,stroke-width:1px,color:#424242
     classDef cIn fill:#E8F0FE,stroke:#4285F4,stroke-width:1px,color:#173A66
     classDef cCore fill:#FFF8E1,stroke:#C9A96E,stroke-width:1px,color:#5B4614
+    classDef cSide fill:#F3E8FD,stroke:#8E44AD,stroke-width:1px,color:#4A235A
     classDef cOut fill:#E6F4EA,stroke:#34A853,stroke-width:1px,color:#14512B
-    class U cIn
-    class T,S,R,I,A,F cCore
-    class OUT cOut
+    class UP cUp
+    class A1 cIn
+    class A2,A4,A5,A6,A7,A9 cCore
+    class A3,A8,A10,A11 cSide
+    class OUT,HUMAN cOut
 ```
 
 **How to read it**
 
-1. It is a **stack** — read it bottom-up: the transport pipe carries sessions, sessions survive network changes, and only then do dedup, audit and federation sit on top.
-2. Every layer solves a **pain you already have**: dropped connections, duplicate payments, "who changed this?", "how do two organizations talk without a middleman?".
-3. Audit and Federation are **optional profiles** — use plain Core/1 if you just need the reliable pipe.
+1. Read top-down: it is **one session's timeline** — a connection is established, authenticated, opened, used, recovered, audited and routed; a request goes in at the top and a signed cross-domain session comes out at the bottom.
+2. Every box names the actual **`reference-impl/gfsip/*.py`** implementation plus the matching spec artifact, so you can jump straight from a step to its code.
+3. The key boundary: there is **no central authority** — auditing and federation are optional **Core / Audit / Federation** profiles, not mandatory layers.
 
 📖 Every term explained in one plain sentence → [Glossary](./GLOSSARY.md)
 

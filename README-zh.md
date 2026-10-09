@@ -14,7 +14,7 @@
 </blockquote>
 
 <p align="center">
-[English](README.md) | 简体中文
+  <a href="README.md">English</a> | 简体中文
 </p>
 
 <div style="max-width:880px;margin:0 auto;padding:0 16px">
@@ -236,7 +236,7 @@ Apache-2.0 允许商业使用、修改与分发，并含<strong>明示专利授�
 - **联系**：国际 / 全球 —— [ai@nohnlins.com](mailto:ai@nohnlins.com) · 中国 —— [lin@secondai.top](mailto:lin@secondai.top)
 
 <p align="center">
-  <a href="https://github.com/nohn3043">GitHub</a>
+  <a href="https://github.com/nohn3043-arch">GitHub</a>
   &nbsp;·&nbsp;
   <a href="https://www.nohnlins.com/">nohnlins.com</a>
   &nbsp;·&nbsp;

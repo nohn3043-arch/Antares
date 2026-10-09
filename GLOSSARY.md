@@ -34,6 +34,31 @@
 
 ---
 
+## ✦ English Glossary
+
+*Every term explained in one plain sentence.*
+
+| Term | Plain meaning |
+|---|---|
+| **GFSIP** | An open protocol standard that lets different organizations, devices and AIs communicate securely. |
+| **QUIC** | A modern transport protocol (also the base of HTTP/3) — connections survive network changes. |
+| **ALPN `gfsip/1`** | Declared during the handshake to say "I speak GFSIP version 1". |
+| **44-byte fixed header** | Every message starts with a fixed 44-byte header, so parsing is fast and hard to get wrong. |
+| **CBOR** | A more compact serialization format than JSON, with a single canonical encoding — so results are reproducible. |
+| **Multiplexing** | Several independent lanes sharing one connection without blocking each other. |
+| **Session resumption** | After a network switch you keep going without logging in again. |
+| **Idempotency key** | Send the same key with the same request and the server guarantees it runs only once. |
+| **Windowed deduplication** | Deduplicate only within a time window instead of keeping history forever. |
+| **Causal audit** | Every event records who caused it, and any of it can be re-verified. |
+| **Causal predecessor** | The upstream event an event declares, linking history into a directed graph. |
+| **DomainDescriptor** | A domain's signed business card, carrying its public key and routing info; it can expire and be revoked. |
+| **Trust anchor** | The root public key you trust in advance; every other trust decision derives from it. |
+| **Fault isolation** | One domain going down doesn't affect traffic inside it or in other domains. |
+| **Core / Audit / Federation** | The mandatory communication core plus two optional capability tiers: audit and federation. |
+| **Conformance vectors** | The test cases published with the spec — third-party implementations run them to prove compliance. |
+
+---
+
 <div align="center">
 
 [← 返回 README](./README.md) &nbsp;·&nbsp; [中文说明](./README-zh.md)
